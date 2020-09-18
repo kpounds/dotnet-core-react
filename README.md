@@ -1,1 +1,1 @@
-# dotnet-core-react
+# Dotnet Core with React Demo

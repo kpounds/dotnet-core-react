@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "dgSpecHash": "axLPx7TW+xiYiqWuDBwRzybvH/uG3fMpJlZAQFpFIx6UHL/oXk0zC0LzUUo2dtnDSSmDvUJItF2p0yUp5/G6zQ==",
+  "success": true,
+  "projectFilePath": "c:\\Users\\kpounds\\Devspace\\Udemy\\dotnet-core-react\\Persistence\\Persistence.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\kpounds\\.nuget\\packages\\microsoft.netcore.platforms\\1.1.0\\microsoft.netcore.platforms.1.1.0.nupkg.sha512",
+    "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder\\netstandard.library\\2.0.3\\netstandard.library.2.0.3.nupkg.sha512"
+  ],
+  "logs": []
+}
