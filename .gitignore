@@ -237,3 +237,5 @@ _Pvt_Extensions
 .fake/
 /src/GreenMountain.DisputeResolutions.App/ClientApp/.idea
 src/GreenMountain.DisputeResolutions.App/ClientApp/cypress.env.json
+
+API/reactivities.db
