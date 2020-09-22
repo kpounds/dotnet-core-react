@@ -1,17 +1,19 @@
 import React, { useEffect, useState } from "react"
-import "./App.css"
-import { Value } from "./models/Value"
 import axios from "axios"
 import { Header, Icon, Item, List } from "semantic-ui-react"
+import { IActivity } from "../models/Activity"
 
 const App: React.FunctionComponent = () => {
-  const [values, setValues] = useState<Value[]>([])
+  const [activities, setActivities] = useState<IActivity[]>([])
 
   useEffect(() => {
-    axios.get("http://localhost:5000/api/values").then((response) => {
-      setValues(response.data)
-    })
+    axios
+      .get<IActivity[]>("http://localhost:5000/api/activities")
+      .then((response) => {
+        setActivities(response.data)
+      })
   }, [])
+
   return (
     <div>
       <Header as="h2">
@@ -19,8 +21,8 @@ const App: React.FunctionComponent = () => {
         <Header.Content>Reactivities</Header.Content>
       </Header>
       <List>
-        {values.map((value) => (
-          <Item key={value.id}>{value.name}</Item>
+        {activities.map((activity) => (
+          <Item key={activity.id}>{activity.title}</Item>
         ))}
       </List>
     </div>
