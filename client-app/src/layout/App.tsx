@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react"
 import axios from "axios"
-import { Header, Icon, Item, List } from "semantic-ui-react"
+import { Container, List } from "semantic-ui-react"
 import { IActivity } from "../models/Activity"
+import NavBar from "../components/nav/NavBar"
 
 const App: React.FunctionComponent = () => {
   const [activities, setActivities] = useState<IActivity[]>([])
@@ -15,17 +16,16 @@ const App: React.FunctionComponent = () => {
   }, [])
 
   return (
-    <div>
-      <Header as="h2">
-        <Icon name="users" />
-        <Header.Content>Reactivities</Header.Content>
-      </Header>
-      <List>
-        {activities.map((activity) => (
-          <Item key={activity.id}>{activity.title}</Item>
-        ))}
-      </List>
-    </div>
+    <>
+      <NavBar />
+      <Container className="app-container">
+        <List>
+          {activities.map((activity) => (
+            <List.Item key={activity.id}>{activity.title}</List.Item>
+          ))}
+        </List>
+      </Container>
+    </>
   )
 }
 
