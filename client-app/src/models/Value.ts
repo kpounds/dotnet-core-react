@@ -1,4 +1,4 @@
-export class Value {
-  public id: number = 0
-  public name: string = ""
+export interface IValue {
+  id: number
+  name: string
 }
