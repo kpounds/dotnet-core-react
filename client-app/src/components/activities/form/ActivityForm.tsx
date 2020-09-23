@@ -65,7 +65,7 @@ const ActivityForm: FunctionComponent<IActivityFormProps> = ({
           onChange={handleInputChange}
         />
         <Form.Input
-          type="date"
+          type="datetime-local"
           placeholder="Date"
           value={activity.date}
           name="date"

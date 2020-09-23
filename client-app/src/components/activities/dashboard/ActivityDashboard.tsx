@@ -41,6 +41,7 @@ const ActivityDashboard: React.FunctionComponent<IActivityDashboardProps> = ({
         )}
         {editMode && (
           <ActivityForm
+            key={selectedActivity?.id ?? 0}
             setEditMode={setEditMode}
             initialFormState={selectedActivity}
             createActivity={createActivity}
