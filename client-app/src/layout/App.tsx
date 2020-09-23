@@ -1,16 +1,18 @@
-import React, { SyntheticEvent, useEffect, useState } from "react"
+import React, { SyntheticEvent, useContext, useEffect, useState } from "react"
 import { Container } from "semantic-ui-react"
 import { Activity } from "../models/Activity"
 import NavBar from "../components/nav/NavBar"
 import ActivityDashboard from "../components/activities/dashboard/ActivityDashboard"
 import ActivitiesApi from "../api/ActivitiesApi"
 import LoadingComponent from "./LoadingComponent"
+import ActivityStore from "../stores/ActivityStore"
+import { observer } from "mobx-react"
 
 const App: React.FunctionComponent = () => {
+  const activityStore = useContext(ActivityStore)
   const [activities, setActivities] = useState<Activity[]>([])
   const [selectedActivity, setSelectedActivity] = useState<Activity | null>(null)
   const [editMode, setEditMode] = useState(false)
-  const [loading, setLoading] = useState(true)
   const [submitting, setSubmitting] = useState(false)
   const [target, setTarget] = useState("")
 
@@ -57,19 +59,10 @@ const App: React.FunctionComponent = () => {
   }
 
   useEffect(() => {
-    ActivitiesApi.getActivityList()
-      .then((response) => {
-        let activities: Activity[] = []
-        response.forEach((activity) => {
-          activity.date = activity.date.split(".")[0]
-          activities.push(activity)
-        })
-        setActivities(activities)
-      })
-      .then(() => setLoading(false))
-  }, [])
+    activityStore.loadActivities()
+  }, [activityStore])
 
-  if (loading) {
+  if (activityStore.loadingInitial) {
     return <LoadingComponent content="Loading activities..." />
   }
 
@@ -78,7 +71,7 @@ const App: React.FunctionComponent = () => {
       <NavBar openCreateForm={handleOpenCreateForm} />
       <Container className="app-container">
         <ActivityDashboard
-          activities={activities}
+          activities={activityStore.activities}
           selectActivity={handleSelectActivity}
           setSelectedActivity={setSelectedActivity}
           selectedActivity={selectedActivity}
@@ -95,4 +88,4 @@ const App: React.FunctionComponent = () => {
   )
 }
 
-export default App
+export default observer(App)
