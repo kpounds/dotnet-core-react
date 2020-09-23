@@ -15,9 +15,22 @@ const App: React.FunctionComponent = () => {
   const handleSelectActivity = (id: string) => {
     setSelectedActivity(activities.find((x) => x.id === id)!)
   }
+
   const handleOpenCreateForm = () => {
     setSelectedActivity(null)
     setEditMode(true)
+  }
+
+  const handleCreateActivity = (activity: Activity) => {
+    setActivities([...activities, activity])
+    setSelectedActivity(activity)
+    setEditMode(false)
+  }
+
+  const handleEditActivity = (activity: Activity) => {
+    setActivities([...activities.filter((x) => x.id !== activity.id), activity])
+    setSelectedActivity(activity)
+    setEditMode(false)
   }
 
   useEffect(() => {
@@ -39,6 +52,8 @@ const App: React.FunctionComponent = () => {
           selectedActivity={selectedActivity}
           editMode={editMode}
           setEditMode={setEditMode}
+          createActivity={handleCreateActivity}
+          editActivity={handleEditActivity}
         />
       </Container>
     </>

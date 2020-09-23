@@ -12,6 +12,8 @@ interface IActivityDashboardProps {
   setSelectedActivity: (activity: Activity | null) => void
   editMode: boolean
   setEditMode: (editMode: boolean) => void
+  createActivity: (activity: Activity) => void
+  editActivity: (activity: Activity) => void
 }
 
 const ActivityDashboard: React.FunctionComponent<IActivityDashboardProps> = ({
@@ -21,6 +23,8 @@ const ActivityDashboard: React.FunctionComponent<IActivityDashboardProps> = ({
   setSelectedActivity,
   editMode,
   setEditMode,
+  createActivity,
+  editActivity,
 }) => {
   return (
     <Grid>
@@ -39,6 +43,8 @@ const ActivityDashboard: React.FunctionComponent<IActivityDashboardProps> = ({
           <ActivityForm
             setEditMode={setEditMode}
             initialFormState={selectedActivity}
+            createActivity={createActivity}
+            editActivity={editActivity}
           />
         )}
       </Grid.Column>
