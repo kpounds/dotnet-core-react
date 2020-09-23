@@ -8,6 +8,7 @@ interface IActivityFormProps {
   initialFormState: Activity | null
   createActivity: (activity: Activity) => void
   editActivity: (activity: Activity) => void
+  submitting: boolean
 }
 
 const ActivityForm: FunctionComponent<IActivityFormProps> = ({
@@ -15,6 +16,7 @@ const ActivityForm: FunctionComponent<IActivityFormProps> = ({
   initialFormState,
   createActivity,
   editActivity,
+  submitting,
 }) => {
   const initializeForm = (): Activity => {
     if (initialFormState) {
@@ -61,7 +63,7 @@ const ActivityForm: FunctionComponent<IActivityFormProps> = ({
         />
         <Form.Input placeholder="City" value={activity.city} name="city" onChange={handleInputChange} />
         <Form.Input placeholder="Venue" value={activity.venue} name="venue" onChange={handleInputChange} />
-        <Button floated="right" positive type="submit" content="Submit" />
+        <Button floated="right" positive type="submit" content="Submit" loading={submitting} />
         <Button floated="right" type="button" content="Cancel" onClick={() => setEditMode(false)} />
       </Form>
     </Segment>
