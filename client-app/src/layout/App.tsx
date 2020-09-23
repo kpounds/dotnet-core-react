@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react"
-import axios from "axios"
 import { Container } from "semantic-ui-react"
 import { Activity } from "../models/Activity"
 import NavBar from "../components/nav/NavBar"
 import ActivityDashboard from "../components/activities/dashboard/ActivityDashboard"
+import ActivitiesApi from "../api/ActivitiesApi"
 
 const App: React.FunctionComponent = () => {
   const [activities, setActivities] = useState<Activity[]>([])
@@ -21,25 +21,31 @@ const App: React.FunctionComponent = () => {
   }
 
   const handleCreateActivity = (activity: Activity) => {
-    setActivities([...activities, activity])
-    setSelectedActivity(activity)
-    setEditMode(false)
+    ActivitiesApi.createActivity(activity).then(() => {
+      setActivities([...activities, activity])
+      setSelectedActivity(activity)
+      setEditMode(false)
+    })
   }
 
   const handleEditActivity = (activity: Activity) => {
-    setActivities([...activities.filter((x) => x.id !== activity.id), activity])
-    setSelectedActivity(activity)
-    setEditMode(false)
+    ActivitiesApi.updateActivity(activity).then(() => {
+      setActivities([...activities.filter((x) => x.id !== activity.id), activity])
+      setSelectedActivity(activity)
+      setEditMode(false)
+    })
   }
 
   const handleDeleteActivity = (id: string) => {
-    setActivities([...activities.filter((x) => x.id !== id)])
+    ActivitiesApi.deleteActivity(id).then(() => {
+      setActivities([...activities.filter((x) => x.id !== id)])
+    })
   }
 
   useEffect(() => {
-    axios.get<Activity[]>("http://localhost:5000/api/activities").then((response) => {
+    ActivitiesApi.getActivityList().then((response) => {
       let activities: Activity[] = []
-      response.data.forEach((activity) => {
+      response.forEach((activity) => {
         activity.date = activity.date.split(".")[0]
         activities.push(activity)
       })
