@@ -1,6 +1,8 @@
 import React from "react"
 import { Grid } from "semantic-ui-react"
 import { IActivity } from "../../../models/Activity"
+import ActivityDetails from "../details/ActivityDetails"
+import ActivityForm from "../form/ActivityForm"
 import ActivityList from "./ActivityList"
 
 interface IActivityDashboardProps {
@@ -14,6 +16,10 @@ const ActivityDashboard: React.FunctionComponent<IActivityDashboardProps> = ({
     <Grid>
       <Grid.Column width={10}>
         <ActivityList activities={activities} />
+      </Grid.Column>
+      <Grid.Column width={6}>
+        <ActivityDetails />
+        <ActivityForm />
       </Grid.Column>
     </Grid>
   )
