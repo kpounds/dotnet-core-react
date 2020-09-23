@@ -1,11 +1,11 @@
 import React, { FunctionComponent } from "react"
 import { Button, Card, Image } from "semantic-ui-react"
-import { IActivity } from "../../../models/Activity"
+import { Activity } from "../../../models/Activity"
 
 interface IActivityDetailsProps {
-  activity: IActivity
+  activity: Activity
   setEditMode: (setEditMode: boolean) => void
-  setSelectedActivity: (activity: IActivity | null) => void
+  setSelectedActivity: (activity: Activity | null) => void
 }
 
 const ActivityDetails: FunctionComponent<IActivityDetailsProps> = ({

@@ -1,9 +1,9 @@
 import React, { FunctionComponent } from "react"
 import { Item, Button, Label, Segment } from "semantic-ui-react"
-import { IActivity } from "../../../models/Activity"
+import { Activity } from "../../../models/Activity"
 
 interface IActivityListProps {
-  activities: IActivity[]
+  activities: Activity[]
   selectActivity: (id: string) => void
 }
 

@@ -1,15 +1,15 @@
 import React from "react"
 import { Grid } from "semantic-ui-react"
-import { IActivity } from "../../../models/Activity"
+import { Activity } from "../../../models/Activity"
 import ActivityDetails from "../details/ActivityDetails"
 import ActivityForm from "../form/ActivityForm"
 import ActivityList from "./ActivityList"
 
 interface IActivityDashboardProps {
-  activities: IActivity[]
+  activities: Activity[]
   selectActivity: (id: string) => void
-  selectedActivity: IActivity | null
-  setSelectedActivity: (activity: IActivity | null) => void
+  selectedActivity: Activity | null
+  setSelectedActivity: (activity: Activity | null) => void
   editMode: boolean
   setEditMode: (editMode: boolean) => void
 }
@@ -35,7 +35,12 @@ const ActivityDashboard: React.FunctionComponent<IActivityDashboardProps> = ({
             setSelectedActivity={setSelectedActivity}
           />
         )}
-        {editMode && <ActivityForm setEditMode={setEditMode} />}
+        {editMode && (
+          <ActivityForm
+            setEditMode={setEditMode}
+            initialFormState={selectedActivity}
+          />
+        )}
       </Grid.Column>
     </Grid>
   )
