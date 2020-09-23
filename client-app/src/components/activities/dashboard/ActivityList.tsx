@@ -4,10 +4,12 @@ import { IActivity } from "../../../models/Activity"
 
 interface IActivityListProps {
   activities: IActivity[]
+  selectActivity: (id: string) => void
 }
 
 const ActivityList: FunctionComponent<IActivityListProps> = ({
   activities,
+  selectActivity,
 }) => {
   return (
     <Segment clearing>
@@ -24,7 +26,12 @@ const ActivityList: FunctionComponent<IActivityListProps> = ({
                 </div>
               </Item.Description>
               <Item.Extra>
-                <Button floated="right" content="View" color="blue" />
+                <Button
+                  floated="right"
+                  content="View"
+                  color="blue"
+                  onClick={() => selectActivity(activity.id)}
+                />
                 <Label basic content={activity.category} />
               </Item.Extra>
             </Item.Content>

@@ -7,6 +7,18 @@ import ActivityDashboard from "../components/activities/dashboard/ActivityDashbo
 
 const App: React.FunctionComponent = () => {
   const [activities, setActivities] = useState<IActivity[]>([])
+  const [selectedActivity, setSelectedActivity] = useState<IActivity | null>(
+    null
+  )
+  const [editMode, setEditMode] = useState(false)
+
+  const handleSelectActivity = (id: string) => {
+    setSelectedActivity(activities.find((x) => x.id === id)!)
+  }
+  const handleOpenCreateForm = () => {
+    setSelectedActivity(null)
+    setEditMode(true)
+  }
 
   useEffect(() => {
     axios
@@ -18,9 +30,16 @@ const App: React.FunctionComponent = () => {
 
   return (
     <>
-      <NavBar />
+      <NavBar openCreateForm={handleOpenCreateForm} />
       <Container className="app-container">
-        <ActivityDashboard activities={activities} />
+        <ActivityDashboard
+          activities={activities}
+          selectActivity={handleSelectActivity}
+          setSelectedActivity={setSelectedActivity}
+          selectedActivity={selectedActivity}
+          editMode={editMode}
+          setEditMode={setEditMode}
+        />
       </Container>
     </>
   )
