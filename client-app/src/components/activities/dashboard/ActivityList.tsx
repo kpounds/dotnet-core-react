@@ -1,17 +1,21 @@
-import React, { FunctionComponent } from "react"
+import React, { FunctionComponent, SyntheticEvent } from "react"
 import { Item, Button, Label, Segment } from "semantic-ui-react"
 import { Activity } from "../../../models/Activity"
 
 interface IActivityListProps {
   activities: Activity[]
   selectActivity: (id: string) => void
-  deleteActivity: (id: string) => void
+  deleteActivity: (event: SyntheticEvent<HTMLButtonElement>, id: string) => void
+  submitting: boolean
+  target: string
 }
 
 const ActivityList: FunctionComponent<IActivityListProps> = ({
   activities,
   selectActivity,
   deleteActivity,
+  submitting,
+  target,
 }) => {
   return (
     <Segment clearing>
@@ -28,17 +32,14 @@ const ActivityList: FunctionComponent<IActivityListProps> = ({
                 </div>
               </Item.Description>
               <Item.Extra>
+                <Button floated="right" content="View" color="blue" onClick={() => selectActivity(activity.id)} />
                 <Button
-                  floated="right"
-                  content="View"
-                  color="blue"
-                  onClick={() => selectActivity(activity.id)}
-                />
-                <Button
+                  name={activity.id}
                   floated="right"
                   content="Delete"
                   color="red"
-                  onClick={() => deleteActivity(activity.id)}
+                  onClick={(e) => deleteActivity(e, activity.id)}
+                  loading={target === activity.id && submitting}
                 />
                 <Label basic content={activity.category} />
               </Item.Extra>

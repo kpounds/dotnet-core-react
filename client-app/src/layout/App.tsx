@@ -1,16 +1,18 @@
-import React, { useEffect, useState } from "react"
-import axios from "axios"
+import React, { SyntheticEvent, useEffect, useState } from "react"
 import { Container } from "semantic-ui-react"
 import { Activity } from "../models/Activity"
 import NavBar from "../components/nav/NavBar"
 import ActivityDashboard from "../components/activities/dashboard/ActivityDashboard"
+import ActivitiesApi from "../api/ActivitiesApi"
+import LoadingComponent from "./LoadingComponent"
 
 const App: React.FunctionComponent = () => {
   const [activities, setActivities] = useState<Activity[]>([])
-  const [selectedActivity, setSelectedActivity] = useState<Activity | null>(
-    null
-  )
+  const [selectedActivity, setSelectedActivity] = useState<Activity | null>(null)
   const [editMode, setEditMode] = useState(false)
+  const [loading, setLoading] = useState(true)
+  const [submitting, setSubmitting] = useState(false)
+  const [target, setTarget] = useState("")
 
   const handleSelectActivity = (id: string) => {
     setSelectedActivity(activities.find((x) => x.id === id)!)
@@ -23,33 +25,53 @@ const App: React.FunctionComponent = () => {
   }
 
   const handleCreateActivity = (activity: Activity) => {
-    setActivities([...activities, activity])
-    setSelectedActivity(activity)
-    setEditMode(false)
+    setSubmitting(true)
+    ActivitiesApi.createActivity(activity)
+      .then(() => {
+        setActivities([...activities, activity])
+        setSelectedActivity(activity)
+        setEditMode(false)
+      })
+      .finally(() => setSubmitting(false))
   }
 
   const handleEditActivity = (activity: Activity) => {
-    setActivities([...activities.filter((x) => x.id !== activity.id), activity])
-    setSelectedActivity(activity)
-    setEditMode(false)
+    setSubmitting(true)
+    ActivitiesApi.updateActivity(activity)
+      .then(() => {
+        setActivities([...activities.filter((x) => x.id !== activity.id), activity])
+        setSelectedActivity(activity)
+        setEditMode(false)
+      })
+      .finally(() => setSubmitting(false))
   }
 
-  const handleDeleteActivity = (id: string) => {
-    setActivities([...activities.filter((x) => x.id !== id)])
+  const handleDeleteActivity = (event: SyntheticEvent<HTMLButtonElement>, id: string) => {
+    setSubmitting(true)
+    setTarget(event.currentTarget.name)
+    ActivitiesApi.deleteActivity(id)
+      .then(() => {
+        setActivities([...activities.filter((x) => x.id !== id)])
+      })
+      .finally(() => setSubmitting(false))
   }
 
   useEffect(() => {
-    axios
-      .get<Activity[]>("http://localhost:5000/api/activities")
+    ActivitiesApi.getActivityList()
       .then((response) => {
         let activities: Activity[] = []
-        response.data.forEach((activity) => {
+        response.forEach((activity) => {
           activity.date = activity.date.split(".")[0]
           activities.push(activity)
         })
         setActivities(activities)
       })
+      .then(() => setLoading(false))
   }, [])
+
+  if (loading) {
+    return <LoadingComponent content="Loading activities..." />
+  }
 
   return (
     <>
@@ -65,6 +87,8 @@ const App: React.FunctionComponent = () => {
           createActivity={handleCreateActivity}
           editActivity={handleEditActivity}
           deleteActivity={handleDeleteActivity}
+          submitting={submitting}
+          target={target}
         />
       </Container>
     </>

@@ -8,18 +8,10 @@ interface IActivityDetailsProps {
   setSelectedActivity: (activity: Activity | null) => void
 }
 
-const ActivityDetails: FunctionComponent<IActivityDetailsProps> = ({
-  activity,
-  setEditMode,
-  setSelectedActivity,
-}) => {
+const ActivityDetails: FunctionComponent<IActivityDetailsProps> = ({ activity, setEditMode, setSelectedActivity }) => {
   return (
     <Card fluid>
-      <Image
-        src={`/assets/categoryImages/${activity.category}.jpg`}
-        wrapped
-        ui={false}
-      />
+      <Image src={`/assets/categoryImages/${activity.category}.jpg`} wrapped ui={false} />
       <Card.Content>
         <Card.Header>{activity.title}</Card.Header>
         <Card.Meta>
@@ -29,18 +21,8 @@ const ActivityDetails: FunctionComponent<IActivityDetailsProps> = ({
       </Card.Content>
       <Card.Content extra>
         <Button.Group widths={2}>
-          <Button
-            basic
-            color="blue"
-            content="Edit"
-            onClick={() => setEditMode(true)}
-          />
-          <Button
-            basic
-            color="grey"
-            content="Cancel"
-            onClick={() => setSelectedActivity(null)}
-          />
+          <Button basic color="blue" content="Edit" onClick={() => setEditMode(true)} />
+          <Button basic color="grey" content="Cancel" onClick={() => setSelectedActivity(null)} />
         </Button.Group>
       </Card.Content>
     </Card>

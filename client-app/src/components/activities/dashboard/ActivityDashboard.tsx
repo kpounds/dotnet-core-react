@@ -1,4 +1,4 @@
-import React from "react"
+import React, { SyntheticEvent } from "react"
 import { Grid } from "semantic-ui-react"
 import { Activity } from "../../../models/Activity"
 import ActivityDetails from "../details/ActivityDetails"
@@ -14,7 +14,9 @@ interface IActivityDashboardProps {
   setEditMode: (editMode: boolean) => void
   createActivity: (activity: Activity) => void
   editActivity: (activity: Activity) => void
-  deleteActivity: (id: string) => void
+  deleteActivity: (event: SyntheticEvent<HTMLButtonElement>, id: string) => void
+  submitting: boolean
+  target: string
 }
 
 const ActivityDashboard: React.FunctionComponent<IActivityDashboardProps> = ({
@@ -27,6 +29,8 @@ const ActivityDashboard: React.FunctionComponent<IActivityDashboardProps> = ({
   createActivity,
   editActivity,
   deleteActivity,
+  submitting,
+  target,
 }) => {
   return (
     <Grid>
@@ -35,6 +39,8 @@ const ActivityDashboard: React.FunctionComponent<IActivityDashboardProps> = ({
           activities={activities}
           selectActivity={selectActivity}
           deleteActivity={deleteActivity}
+          submitting={submitting}
+          target={target}
         />
       </Grid.Column>
       <Grid.Column width={6}>
@@ -52,6 +58,7 @@ const ActivityDashboard: React.FunctionComponent<IActivityDashboardProps> = ({
             initialFormState={selectedActivity}
             createActivity={createActivity}
             editActivity={editActivity}
+            submitting={submitting}
           />
         )}
       </Grid.Column>
