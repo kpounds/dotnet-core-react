@@ -8,11 +8,7 @@ interface IActivityListProps {
   deleteActivity: (id: string) => void
 }
 
-const ActivityList: FunctionComponent<IActivityListProps> = ({
-  activities,
-  selectActivity,
-  deleteActivity,
-}) => {
+const ActivityList: FunctionComponent<IActivityListProps> = ({ activities, selectActivity, deleteActivity }) => {
   return (
     <Segment clearing>
       <Item.Group divided>
@@ -28,18 +24,8 @@ const ActivityList: FunctionComponent<IActivityListProps> = ({
                 </div>
               </Item.Description>
               <Item.Extra>
-                <Button
-                  floated="right"
-                  content="View"
-                  color="blue"
-                  onClick={() => selectActivity(activity.id)}
-                />
-                <Button
-                  floated="right"
-                  content="Delete"
-                  color="red"
-                  onClick={() => deleteActivity(activity.id)}
-                />
+                <Button floated="right" content="View" color="blue" onClick={() => selectActivity(activity.id)} />
+                <Button floated="right" content="Delete" color="red" onClick={() => deleteActivity(activity.id)} />
                 <Label basic content={activity.category} />
               </Item.Extra>
             </Item.Content>

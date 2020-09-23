@@ -7,9 +7,7 @@ import ActivityDashboard from "../components/activities/dashboard/ActivityDashbo
 
 const App: React.FunctionComponent = () => {
   const [activities, setActivities] = useState<Activity[]>([])
-  const [selectedActivity, setSelectedActivity] = useState<Activity | null>(
-    null
-  )
+  const [selectedActivity, setSelectedActivity] = useState<Activity | null>(null)
   const [editMode, setEditMode] = useState(false)
 
   const handleSelectActivity = (id: string) => {
@@ -39,16 +37,14 @@ const App: React.FunctionComponent = () => {
   }
 
   useEffect(() => {
-    axios
-      .get<Activity[]>("http://localhost:5000/api/activities")
-      .then((response) => {
-        let activities: Activity[] = []
-        response.data.forEach((activity) => {
-          activity.date = activity.date.split(".")[0]
-          activities.push(activity)
-        })
-        setActivities(activities)
+    axios.get<Activity[]>("http://localhost:5000/api/activities").then((response) => {
+      let activities: Activity[] = []
+      response.data.forEach((activity) => {
+        activity.date = activity.date.split(".")[0]
+        activities.push(activity)
       })
+      setActivities(activities)
+    })
   }, [])
 
   return (
