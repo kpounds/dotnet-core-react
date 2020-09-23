@@ -14,6 +14,7 @@ interface IActivityDashboardProps {
   setEditMode: (editMode: boolean) => void
   createActivity: (activity: Activity) => void
   editActivity: (activity: Activity) => void
+  deleteActivity: (id: string) => void
 }
 
 const ActivityDashboard: React.FunctionComponent<IActivityDashboardProps> = ({
@@ -25,11 +26,16 @@ const ActivityDashboard: React.FunctionComponent<IActivityDashboardProps> = ({
   setEditMode,
   createActivity,
   editActivity,
+  deleteActivity,
 }) => {
   return (
     <Grid>
       <Grid.Column width={10}>
-        <ActivityList activities={activities} selectActivity={selectActivity} />
+        <ActivityList
+          activities={activities}
+          selectActivity={selectActivity}
+          deleteActivity={deleteActivity}
+        />
       </Grid.Column>
       <Grid.Column width={6}>
         {selectedActivity && !editMode && (

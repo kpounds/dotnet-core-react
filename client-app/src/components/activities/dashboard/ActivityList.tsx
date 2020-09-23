@@ -5,11 +5,13 @@ import { Activity } from "../../../models/Activity"
 interface IActivityListProps {
   activities: Activity[]
   selectActivity: (id: string) => void
+  deleteActivity: (id: string) => void
 }
 
 const ActivityList: FunctionComponent<IActivityListProps> = ({
   activities,
   selectActivity,
+  deleteActivity,
 }) => {
   return (
     <Segment clearing>
@@ -31,6 +33,12 @@ const ActivityList: FunctionComponent<IActivityListProps> = ({
                   content="View"
                   color="blue"
                   onClick={() => selectActivity(activity.id)}
+                />
+                <Button
+                  floated="right"
+                  content="Delete"
+                  color="red"
+                  onClick={() => deleteActivity(activity.id)}
                 />
                 <Label basic content={activity.category} />
               </Item.Extra>
