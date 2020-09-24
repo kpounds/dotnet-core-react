@@ -1,11 +1,9 @@
-import React, { FunctionComponent } from "react"
+import React, { FunctionComponent, useContext } from "react"
 import { Button, Container, Menu } from "semantic-ui-react"
+import ActivityStore from "../../stores/ActivityStore"
 
-interface INavBarProps {
-  openCreateForm: () => void
-}
-
-const NavBar: FunctionComponent<INavBarProps> = ({ openCreateForm }) => {
+const NavBar: FunctionComponent = () => {
+  const { openCreateForm } = useContext(ActivityStore)
   return (
     <Menu fixed="top" inverted>
       <Container>
