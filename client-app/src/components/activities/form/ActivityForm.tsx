@@ -1,23 +1,16 @@
-import React, { FormEvent, FunctionComponent, useState } from "react"
+import React, { FormEvent, FunctionComponent, useContext, useState } from "react"
 import { Button, Form, Segment } from "semantic-ui-react"
 import { Activity } from "../../../models/Activity"
 import { v4 as uuid } from "uuid"
+import ActivityStore from "../../../stores/ActivityStore"
+import { observer } from "mobx-react"
 
 interface IActivityFormProps {
-  setEditMode: (editMode: boolean) => void
-  initialFormState: Activity | null
-  createActivity: (activity: Activity) => void
-  editActivity: (activity: Activity) => void
-  submitting: boolean
+  initialFormState: Activity | undefined
 }
 
-const ActivityForm: FunctionComponent<IActivityFormProps> = ({
-  setEditMode,
-  initialFormState,
-  createActivity,
-  editActivity,
-  submitting,
-}) => {
+const ActivityForm: FunctionComponent<IActivityFormProps> = ({ initialFormState }) => {
+  const { createActivity, editActivity, submitting, cancelEditForm } = useContext(ActivityStore)
   const initializeForm = (): Activity => {
     if (initialFormState) {
       return initialFormState
@@ -28,7 +21,6 @@ const ActivityForm: FunctionComponent<IActivityFormProps> = ({
   const [activity, setActivity] = useState<Activity>(initializeForm)
 
   const handleSubmit = () => {
-    console.log(activity)
     if (activity.id.length === 0) {
       const newActivity = { ...activity, id: uuid() }
       createActivity(newActivity)
@@ -64,10 +56,10 @@ const ActivityForm: FunctionComponent<IActivityFormProps> = ({
         <Form.Input placeholder="City" value={activity.city} name="city" onChange={handleInputChange} />
         <Form.Input placeholder="Venue" value={activity.venue} name="venue" onChange={handleInputChange} />
         <Button floated="right" positive type="submit" content="Submit" loading={submitting} />
-        <Button floated="right" type="button" content="Cancel" onClick={() => setEditMode(false)} />
+        <Button floated="right" type="button" content="Cancel" onClick={cancelEditForm} />
       </Form>
     </Segment>
   )
 }
 
-export default ActivityForm
+export default observer(ActivityForm)

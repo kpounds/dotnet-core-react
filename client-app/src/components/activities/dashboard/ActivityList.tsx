@@ -1,26 +1,14 @@
-import React, { FunctionComponent, SyntheticEvent } from "react"
+import { observer } from "mobx-react"
+import React, { FunctionComponent, useContext } from "react"
 import { Item, Button, Label, Segment } from "semantic-ui-react"
-import { Activity } from "../../../models/Activity"
+import ActivityStore from "../../../stores/ActivityStore"
 
-interface IActivityListProps {
-  activities: Activity[]
-  selectActivity: (id: string) => void
-  deleteActivity: (event: SyntheticEvent<HTMLButtonElement>, id: string) => void
-  submitting: boolean
-  target: string
-}
-
-const ActivityList: FunctionComponent<IActivityListProps> = ({
-  activities,
-  selectActivity,
-  deleteActivity,
-  submitting,
-  target,
-}) => {
+const ActivityList: FunctionComponent = () => {
+  const { activitiesByDate, setSelectedActivity, deleteActivity, submitting, target } = useContext(ActivityStore)
   return (
     <Segment clearing>
       <Item.Group divided>
-        {activities.map((activity) => (
+        {activitiesByDate.map((activity) => (
           <Item key={activity.id}>
             <Item.Content>
               <Item.Header as="a">{activity.title}</Item.Header>
@@ -32,7 +20,7 @@ const ActivityList: FunctionComponent<IActivityListProps> = ({
                 </div>
               </Item.Description>
               <Item.Extra>
-                <Button floated="right" content="View" color="blue" onClick={() => selectActivity(activity.id)} />
+                <Button floated="right" content="View" color="blue" onClick={() => setSelectedActivity(activity.id)} />
                 <Button
                   name={activity.id}
                   floated="right"
@@ -51,4 +39,4 @@ const ActivityList: FunctionComponent<IActivityListProps> = ({
   )
 }
 
-export default ActivityList
+export default observer(ActivityList)
