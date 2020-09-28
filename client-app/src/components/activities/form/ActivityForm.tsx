@@ -5,12 +5,11 @@ import { v4 as uuid } from "uuid"
 import ActivityStore from "../../../stores/ActivityStore"
 
 interface IActivityFormProps {
-  setEditMode: (editMode: boolean) => void
   initialFormState: Activity | undefined
 }
 
-const ActivityForm: FunctionComponent<IActivityFormProps> = ({ setEditMode, initialFormState }) => {
-  const { createActivity, editActivity, submitting } = useContext(ActivityStore)
+const ActivityForm: FunctionComponent<IActivityFormProps> = ({ initialFormState }) => {
+  const { createActivity, editActivity, submitting, cancelEditForm } = useContext(ActivityStore)
   const initializeForm = (): Activity => {
     if (initialFormState) {
       return initialFormState
@@ -57,7 +56,7 @@ const ActivityForm: FunctionComponent<IActivityFormProps> = ({ setEditMode, init
         <Form.Input placeholder="City" value={activity.city} name="city" onChange={handleInputChange} />
         <Form.Input placeholder="Venue" value={activity.venue} name="venue" onChange={handleInputChange} />
         <Button floated="right" positive type="submit" content="Submit" loading={submitting} />
-        <Button floated="right" type="button" content="Cancel" onClick={() => setEditMode(false)} />
+        <Button floated="right" type="button" content="Cancel" onClick={cancelEditForm} />
       </Form>
     </Segment>
   )

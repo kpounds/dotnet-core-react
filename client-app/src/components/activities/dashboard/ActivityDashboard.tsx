@@ -8,14 +8,12 @@ import ActivityForm from "../form/ActivityForm"
 import ActivityList from "./ActivityList"
 
 interface IActivityDashboardProps {
-  setEditMode: (editMode: boolean) => void
   deleteActivity: (event: SyntheticEvent<HTMLButtonElement>, id: string) => void
   submitting: boolean
   target: string
 }
 
 const ActivityDashboard: React.FunctionComponent<IActivityDashboardProps> = ({
-  setEditMode,
   deleteActivity,
   submitting,
   target,
@@ -28,9 +26,7 @@ const ActivityDashboard: React.FunctionComponent<IActivityDashboardProps> = ({
       </Grid.Column>
       <Grid.Column width={6}>
         {selectedActivity && !editMode && <ActivityDetails />}
-        {editMode && (
-          <ActivityForm key={selectedActivity?.id ?? 0} setEditMode={setEditMode} initialFormState={selectedActivity} />
-        )}
+        {editMode && <ActivityForm key={selectedActivity?.id ?? 0} initialFormState={selectedActivity} />}
       </Grid.Column>
     </Grid>
   )
