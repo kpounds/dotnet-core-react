@@ -10,11 +10,11 @@ interface IActivityListProps {
 }
 
 const ActivityList: FunctionComponent<IActivityListProps> = ({ deleteActivity, submitting, target }) => {
-  const { activities, setSelectedActivity } = useContext(ActivityStore)
+  const { activitiesByDate, setSelectedActivity } = useContext(ActivityStore)
   return (
     <Segment clearing>
       <Item.Group divided>
-        {activities.map((activity) => (
+        {activitiesByDate.map((activity) => (
           <Item key={activity.id}>
             <Item.Content>
               <Item.Header as="a">{activity.title}</Item.Header>

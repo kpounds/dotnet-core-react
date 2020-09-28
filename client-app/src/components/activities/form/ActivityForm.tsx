@@ -7,17 +7,11 @@ import ActivityStore from "../../../stores/ActivityStore"
 interface IActivityFormProps {
   setEditMode: (editMode: boolean) => void
   initialFormState: Activity | undefined
-  editActivity: (activity: Activity) => void
   submitting: boolean
 }
 
-const ActivityForm: FunctionComponent<IActivityFormProps> = ({
-  setEditMode,
-  initialFormState,
-  editActivity,
-  submitting,
-}) => {
-  const { createActivity } = useContext(ActivityStore)
+const ActivityForm: FunctionComponent<IActivityFormProps> = ({ setEditMode, initialFormState, submitting }) => {
+  const { createActivity, editActivity } = useContext(ActivityStore)
   const initializeForm = (): Activity => {
     if (initialFormState) {
       return initialFormState

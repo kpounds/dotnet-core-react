@@ -16,17 +16,6 @@ const App: React.FunctionComponent = () => {
   const [submitting, setSubmitting] = useState(false)
   const [target, setTarget] = useState("")
 
-  const handleEditActivity = (activity: Activity) => {
-    setSubmitting(true)
-    ActivitiesApi.updateActivity(activity)
-      .then(() => {
-        setActivities([...activities.filter((x) => x.id !== activity.id), activity])
-        setSelectedActivity(activity)
-        setEditMode(false)
-      })
-      .finally(() => setSubmitting(false))
-  }
-
   const handleDeleteActivity = (event: SyntheticEvent<HTMLButtonElement>, id: string) => {
     setSubmitting(true)
     setTarget(event.currentTarget.name)
@@ -52,7 +41,6 @@ const App: React.FunctionComponent = () => {
         <ActivityDashboard
           setSelectedActivity={setSelectedActivity}
           setEditMode={setEditMode}
-          editActivity={handleEditActivity}
           deleteActivity={handleDeleteActivity}
           submitting={submitting}
           target={target}

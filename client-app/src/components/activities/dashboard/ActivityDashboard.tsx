@@ -10,7 +10,6 @@ import ActivityList from "./ActivityList"
 interface IActivityDashboardProps {
   setSelectedActivity: (activity: Activity | null) => void
   setEditMode: (editMode: boolean) => void
-  editActivity: (activity: Activity) => void
   deleteActivity: (event: SyntheticEvent<HTMLButtonElement>, id: string) => void
   submitting: boolean
   target: string
@@ -19,7 +18,6 @@ interface IActivityDashboardProps {
 const ActivityDashboard: React.FunctionComponent<IActivityDashboardProps> = ({
   setSelectedActivity,
   setEditMode,
-  editActivity,
   deleteActivity,
   submitting,
   target,
@@ -39,7 +37,6 @@ const ActivityDashboard: React.FunctionComponent<IActivityDashboardProps> = ({
             key={selectedActivity?.id ?? 0}
             setEditMode={setEditMode}
             initialFormState={selectedActivity}
-            editActivity={editActivity}
             submitting={submitting}
           />
         )}
