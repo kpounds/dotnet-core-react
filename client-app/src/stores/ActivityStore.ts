@@ -1,7 +1,9 @@
-import { action, computed, observable } from "mobx"
+import { action, computed, observable, configure, runInAction } from "mobx"
 import { createContext, SyntheticEvent } from "react"
 import ActivitiesApi from "../api/ActivitiesApi"
 import { Activity } from "../models/Activity"
+
+configure({ enforceActions: "always" })
 
 class ActivityStore {
   @observable
@@ -27,14 +29,18 @@ class ActivityStore {
     this.loadingInitial = true
     try {
       const activities = await ActivitiesApi.getActivityList()
-      activities.forEach((activity) => {
-        activity.date = activity.date.split(".")[0]
-        this.activityRegistry.set(activity.id, activity)
+      runInAction("loading activities", () => {
+        activities.forEach((activity) => {
+          activity.date = activity.date.split(".")[0]
+          this.activityRegistry.set(activity.id, activity)
+        })
       })
     } catch (error) {
       console.log(error)
     } finally {
-      this.loadingInitial = false
+      runInAction("load activities error", () => {
+        this.loadingInitial = false
+      })
     }
   }
 
@@ -43,12 +49,16 @@ class ActivityStore {
     this.submitting = true
     try {
       await ActivitiesApi.createActivity(activity)
-      this.activityRegistry.set(activity.id, activity)
-      this.editMode = false
+      runInAction("creating activity", () => {
+        this.activityRegistry.set(activity.id, activity)
+        this.editMode = false
+      })
     } catch (error) {
       console.log(error)
     } finally {
-      this.submitting = false
+      runInAction("create activity error", () => {
+        this.submitting = false
+      })
     }
   }
 
@@ -57,13 +67,17 @@ class ActivityStore {
     this.submitting = true
     try {
       await ActivitiesApi.updateActivity(activity)
-      this.activityRegistry.set(activity.id, activity)
-      this.selectedActivity = activity
-      this.editMode = false
+      runInAction("editing an activity", () => {
+        this.activityRegistry.set(activity.id, activity)
+        this.selectedActivity = activity
+        this.editMode = false
+      })
     } catch (error) {
       console.log(error)
     } finally {
-      this.submitting = false
+      runInAction("edit activity error", () => {
+        this.submitting = false
+      })
     }
   }
 
@@ -73,12 +87,16 @@ class ActivityStore {
     this.target = event.currentTarget.name
     try {
       await ActivitiesApi.deleteActivity(id)
-      this.activityRegistry.delete(id)
+      runInAction("deleting activity", () => {
+        this.activityRegistry.delete(id)
+      })
     } catch (error) {
       console.log(error)
     } finally {
-      this.submitting = false
-      this.target = ""
+      runInAction("delete activity error", () => {
+        this.submitting = false
+        this.target = ""
+      })
     }
   }
 
