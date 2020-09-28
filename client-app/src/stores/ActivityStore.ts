@@ -1,5 +1,5 @@
 import { action, computed, observable } from "mobx"
-import { createContext } from "react"
+import { createContext, SyntheticEvent } from "react"
 import ActivitiesApi from "../api/ActivitiesApi"
 import { Activity } from "../models/Activity"
 
@@ -14,6 +14,8 @@ class ActivityStore {
   public loadingInitial: boolean = false
   @observable
   public submitting: boolean = false
+  @observable
+  public target = ""
 
   @computed
   public get activitiesByDate() {
@@ -62,6 +64,21 @@ class ActivityStore {
       console.log(error)
     } finally {
       this.submitting = false
+    }
+  }
+
+  @action
+  public deleteActivity = async (event: SyntheticEvent<HTMLButtonElement>, id: string) => {
+    this.submitting = true
+    this.target = event.currentTarget.name
+    try {
+      await ActivitiesApi.deleteActivity(id)
+      this.activityRegistry.delete(id)
+    } catch (error) {
+      console.log(error)
+    } finally {
+      this.submitting = false
+      this.target = ""
     }
   }
 

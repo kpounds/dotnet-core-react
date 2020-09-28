@@ -4,7 +4,7 @@ import { Button, Card, Image } from "semantic-ui-react"
 import ActivityStore from "../../../stores/ActivityStore"
 
 const ActivityDetails: FunctionComponent = () => {
-  const { selectedActivity: activity, openEditForm, cancelEditForm, resetSelectedActivity } = useContext(ActivityStore)
+  const { selectedActivity: activity, openEditForm, resetSelectedActivity } = useContext(ActivityStore)
   return (
     <Card fluid>
       <Image src={`/assets/categoryImages/${activity!.category}.jpg`} wrapped ui={false} />

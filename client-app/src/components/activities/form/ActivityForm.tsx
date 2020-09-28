@@ -20,7 +20,6 @@ const ActivityForm: FunctionComponent<IActivityFormProps> = ({ initialFormState 
   const [activity, setActivity] = useState<Activity>(initializeForm)
 
   const handleSubmit = () => {
-    console.log(activity)
     if (activity.id.length === 0) {
       const newActivity = { ...activity, id: uuid() }
       createActivity(newActivity)
