@@ -11,7 +11,6 @@ import { observer } from "mobx-react"
 const App: React.FunctionComponent = () => {
   const { loadingInitial, loadActivities } = useContext(ActivityStore)
   const [activities, setActivities] = useState<Activity[]>([])
-  const [selectedActivity, setSelectedActivity] = useState<Activity | null>(null)
   const [editMode, setEditMode] = useState(false)
   const [submitting, setSubmitting] = useState(false)
   const [target, setTarget] = useState("")
@@ -39,7 +38,6 @@ const App: React.FunctionComponent = () => {
       <NavBar />
       <Container className="app-container">
         <ActivityDashboard
-          setSelectedActivity={setSelectedActivity}
           setEditMode={setEditMode}
           deleteActivity={handleDeleteActivity}
           submitting={submitting}
