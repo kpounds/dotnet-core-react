@@ -9,7 +9,7 @@ class ActivityStore {
   @observable
   public activityRegistry = new Map()
   @observable
-  public activity: Activity | undefined
+  public activity: Activity | null = null
   @observable
   public editMode: boolean = false
   @observable
@@ -70,7 +70,12 @@ class ActivityStore {
     }
   }
 
-  private getActivity = (id: string): Activity | undefined => {
+  @action
+  public clearActivity = () => {
+    this.activity = null
+  }
+
+  private getActivity = (id: string): Activity | null => {
     return this.activityRegistry.get(id)
   }
 
@@ -139,7 +144,7 @@ class ActivityStore {
   @action
   public openCreateForm = () => {
     this.editMode = true
-    this.activity = undefined
+    this.activity = null
   }
 
   @action
@@ -155,7 +160,7 @@ class ActivityStore {
 
   @action
   public resetSelectedActivity = () => {
-    this.activity = undefined
+    this.activity = null
   }
 
   @action

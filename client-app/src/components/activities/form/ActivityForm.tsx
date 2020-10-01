@@ -1,24 +1,24 @@
-import React, { FormEvent, FunctionComponent, useContext, useState } from "react"
+import React, { FormEvent, FunctionComponent, useContext, useEffect, useState } from "react"
 import { Button, Form, Segment } from "semantic-ui-react"
 import { Activity } from "../../../models/Activity"
 import { v4 as uuid } from "uuid"
 import ActivityStore from "../../../stores/ActivityStore"
 import { observer } from "mobx-react"
+import { RouteComponentProps } from "react-router-dom"
+import { IRouteParams } from "../details/ActivityDetails"
 
-interface IActivityFormProps {
-  initialFormState: Activity | undefined
-}
+const ActivityForm: FunctionComponent<RouteComponentProps<IRouteParams>> = ({ match }) => {
+  const {
+    createActivity,
+    editActivity,
+    submitting,
+    cancelEditForm,
+    activity: initialFormState,
+    loadActivity,
+    clearActivity,
+  } = useContext(ActivityStore)
 
-const ActivityForm: FunctionComponent<IActivityFormProps> = ({ initialFormState }) => {
-  const { createActivity, editActivity, submitting, cancelEditForm } = useContext(ActivityStore)
-  const initializeForm = (): Activity => {
-    if (initialFormState) {
-      return initialFormState
-    }
-    return new Activity()
-  }
-
-  const [activity, setActivity] = useState<Activity>(initializeForm)
+  const [activity, setActivity] = useState<Activity>(new Activity())
 
   const handleSubmit = () => {
     if (activity.id.length === 0) {
@@ -33,6 +33,17 @@ const ActivityForm: FunctionComponent<IActivityFormProps> = ({ initialFormState 
     const { name, value } = event.currentTarget
     setActivity({ ...activity, [name]: value })
   }
+
+  useEffect(() => {
+    if (match.params.id) {
+      loadActivity(match.params.id).then(() => {
+        initialFormState && setActivity(initialFormState)
+      })
+    }
+    return () => {
+      clearActivity()
+    }
+  }, [loadActivity, clearActivity, match.params.id, initialFormState])
 
   return (
     <Segment clearing>

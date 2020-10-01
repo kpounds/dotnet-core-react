@@ -1,16 +1,16 @@
-import React, { useContext, useEffect } from "react"
+import React, { FunctionComponent, useContext, useEffect } from "react"
 import { Container } from "semantic-ui-react"
 import NavBar from "../components/nav/NavBar"
 import LoadingComponent from "./LoadingComponent"
 import ActivityStore from "../stores/ActivityStore"
 import { observer } from "mobx-react"
-import { Route } from "react-router-dom"
+import { Route, RouteComponentProps, withRouter } from "react-router-dom"
 import HomePage from "../pages/Home/HomePage"
 import ActivityDashboard from "../components/activities/dashboard/ActivityDashboard"
 import ActivityForm from "../components/activities/form/ActivityForm"
 import ActivityDetails from "../components/activities/details/ActivityDetails"
 
-const App: React.FunctionComponent = () => {
+const App: FunctionComponent<RouteComponentProps> = ({ location }) => {
   const { loadingInitial, loadActivities } = useContext(ActivityStore)
 
   useEffect(() => {
@@ -28,10 +28,10 @@ const App: React.FunctionComponent = () => {
         <Route exact path="/" component={HomePage} />
         <Route exact path="/activities" component={ActivityDashboard} />
         <Route path="/activities/:id" component={ActivityDetails} />
-        <Route path="/createActivity" component={ActivityForm} />
+        <Route key={location.key} path={["/createActivity", "/manage/:id"]} component={ActivityForm} />
       </Container>
     </>
   )
 }
 
-export default observer(App)
+export default withRouter(observer(App))
