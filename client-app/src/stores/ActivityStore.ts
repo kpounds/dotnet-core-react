@@ -11,8 +11,6 @@ class ActivityStore {
   @observable
   public activity: Activity | null = null
   @observable
-  public editMode: boolean = false
-  @observable
   public loadingInitial: boolean = false
   @observable
   public submitting: boolean = false
@@ -86,7 +84,6 @@ class ActivityStore {
       await ActivitiesApi.createActivity(activity)
       runInAction("creating activity", () => {
         this.activityRegistry.set(activity.id, activity)
-        this.editMode = false
       })
     } catch (error) {
       runInAction("create activity error", () => {
@@ -107,7 +104,6 @@ class ActivityStore {
       runInAction("editing an activity", () => {
         this.activityRegistry.set(activity.id, activity)
         this.activity = activity
-        this.editMode = false
       })
     } catch (error) {
       runInAction("edit activity error", () => {
@@ -139,34 +135,6 @@ class ActivityStore {
         this.target = ""
       })
     }
-  }
-
-  @action
-  public openCreateForm = () => {
-    this.editMode = true
-    this.activity = null
-  }
-
-  @action
-  public openEditForm = (id: string) => {
-    this.activity = this.activityRegistry.get(id)
-    this.editMode = true
-  }
-
-  @action
-  public cancelEditForm = () => {
-    this.editMode = false
-  }
-
-  @action
-  public resetSelectedActivity = () => {
-    this.activity = null
-  }
-
-  @action
-  public setSelectedActivity = (id: string) => {
-    this.activity = this.activityRegistry.get(id)
-    this.editMode = false
   }
 }
 

@@ -1,8 +1,6 @@
-import React, { FunctionComponent, useContext, useEffect } from "react"
+import React, { FunctionComponent } from "react"
 import { Container } from "semantic-ui-react"
 import NavBar from "../components/nav/NavBar"
-import LoadingComponent from "./LoadingComponent"
-import ActivityStore from "../stores/ActivityStore"
 import { observer } from "mobx-react"
 import { Route, RouteComponentProps, withRouter } from "react-router-dom"
 import HomePage from "../pages/Home/HomePage"
@@ -11,16 +9,6 @@ import ActivityForm from "../components/activities/form/ActivityForm"
 import ActivityDetails from "../components/activities/details/ActivityDetails"
 
 const App: FunctionComponent<RouteComponentProps> = ({ location }) => {
-  const { loadingInitial, loadActivities } = useContext(ActivityStore)
-
-  useEffect(() => {
-    loadActivities()
-  }, [loadActivities])
-
-  if (loadingInitial) {
-    return <LoadingComponent content="Loading activities..." />
-  }
-
   return (
     <>
       <Route exact path="/" component={HomePage} />

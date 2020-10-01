@@ -12,7 +12,6 @@ const ActivityForm: FunctionComponent<RouteComponentProps<IRouteParams>> = ({ hi
     createActivity,
     editActivity,
     submitting,
-    cancelEditForm,
     activity: initialFormState,
     loadActivity,
     clearActivity,
@@ -71,7 +70,7 @@ const ActivityForm: FunctionComponent<RouteComponentProps<IRouteParams>> = ({ hi
         <Form.Input placeholder="City" value={activity.city} name="city" onChange={handleInputChange} />
         <Form.Input placeholder="Venue" value={activity.venue} name="venue" onChange={handleInputChange} />
         <Button floated="right" positive type="submit" content="Submit" loading={submitting} />
-        <Button floated="right" type="button" content="Cancel" onClick={cancelEditForm} />
+        <Button floated="right" type="button" content="Cancel" onClick={() => history.push("/activities")} />
       </Form>
     </Segment>
   )
