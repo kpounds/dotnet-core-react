@@ -7,7 +7,7 @@ import { observer } from "mobx-react"
 import { RouteComponentProps } from "react-router-dom"
 import { IRouteParams } from "../details/ActivityDetails"
 
-const ActivityForm: FunctionComponent<RouteComponentProps<IRouteParams>> = ({ match }) => {
+const ActivityForm: FunctionComponent<RouteComponentProps<IRouteParams>> = ({ history, match }) => {
   const {
     createActivity,
     editActivity,
@@ -23,9 +23,13 @@ const ActivityForm: FunctionComponent<RouteComponentProps<IRouteParams>> = ({ ma
   const handleSubmit = () => {
     if (activity.id.length === 0) {
       const newActivity = { ...activity, id: uuid() }
-      createActivity(newActivity)
+      createActivity(newActivity).then(() => {
+        history.push(`/activities/${newActivity.id}`)
+      })
     } else {
-      editActivity(activity)
+      editActivity(activity).then(() => {
+        history.push(`/activities/${activity.id}`)
+      })
     }
   }
 
@@ -35,7 +39,7 @@ const ActivityForm: FunctionComponent<RouteComponentProps<IRouteParams>> = ({ ma
   }
 
   useEffect(() => {
-    if (match.params.id) {
+    if (match.params.id && activity.id.length === 0) {
       loadActivity(match.params.id).then(() => {
         initialFormState && setActivity(initialFormState)
       })
@@ -43,7 +47,7 @@ const ActivityForm: FunctionComponent<RouteComponentProps<IRouteParams>> = ({ ma
     return () => {
       clearActivity()
     }
-  }, [loadActivity, clearActivity, match.params.id, initialFormState])
+  }, [loadActivity, clearActivity, match.params.id, initialFormState, activity.id.length])
 
   return (
     <Segment clearing>
