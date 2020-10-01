@@ -1,31 +1,34 @@
-import React, { FormEvent, FunctionComponent, useContext, useState } from "react"
+import React, { FormEvent, FunctionComponent, useContext, useEffect, useState } from "react"
 import { Button, Form, Segment } from "semantic-ui-react"
 import { Activity } from "../../../models/Activity"
 import { v4 as uuid } from "uuid"
 import ActivityStore from "../../../stores/ActivityStore"
 import { observer } from "mobx-react"
+import { RouteComponentProps } from "react-router-dom"
+import { IRouteParams } from "../details/ActivityDetails"
 
-interface IActivityFormProps {
-  initialFormState: Activity | undefined
-}
+const ActivityForm: FunctionComponent<RouteComponentProps<IRouteParams>> = ({ history, match }) => {
+  const {
+    createActivity,
+    editActivity,
+    submitting,
+    activity: initialFormState,
+    loadActivity,
+    clearActivity,
+  } = useContext(ActivityStore)
 
-const ActivityForm: FunctionComponent<IActivityFormProps> = ({ initialFormState }) => {
-  const { createActivity, editActivity, submitting, cancelEditForm } = useContext(ActivityStore)
-  const initializeForm = (): Activity => {
-    if (initialFormState) {
-      return initialFormState
-    }
-    return new Activity()
-  }
-
-  const [activity, setActivity] = useState<Activity>(initializeForm)
+  const [activity, setActivity] = useState<Activity>(new Activity())
 
   const handleSubmit = () => {
     if (activity.id.length === 0) {
       const newActivity = { ...activity, id: uuid() }
-      createActivity(newActivity)
+      createActivity(newActivity).then(() => {
+        history.push(`/activities/${newActivity.id}`)
+      })
     } else {
-      editActivity(activity)
+      editActivity(activity).then(() => {
+        history.push(`/activities/${activity.id}`)
+      })
     }
   }
 
@@ -33,6 +36,17 @@ const ActivityForm: FunctionComponent<IActivityFormProps> = ({ initialFormState 
     const { name, value } = event.currentTarget
     setActivity({ ...activity, [name]: value })
   }
+
+  useEffect(() => {
+    if (match.params.id && activity.id.length === 0) {
+      loadActivity(match.params.id).then(() => {
+        initialFormState && setActivity(initialFormState)
+      })
+    }
+    return () => {
+      clearActivity()
+    }
+  }, [loadActivity, clearActivity, match.params.id, initialFormState, activity.id.length])
 
   return (
     <Segment clearing>
@@ -56,7 +70,7 @@ const ActivityForm: FunctionComponent<IActivityFormProps> = ({ initialFormState 
         <Form.Input placeholder="City" value={activity.city} name="city" onChange={handleInputChange} />
         <Form.Input placeholder="Venue" value={activity.venue} name="venue" onChange={handleInputChange} />
         <Button floated="right" positive type="submit" content="Submit" loading={submitting} />
-        <Button floated="right" type="button" content="Cancel" onClick={cancelEditForm} />
+        <Button floated="right" type="button" content="Cancel" onClick={() => history.push("/activities")} />
       </Form>
     </Segment>
   )

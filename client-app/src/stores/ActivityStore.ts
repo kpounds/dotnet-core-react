@@ -9,9 +9,7 @@ class ActivityStore {
   @observable
   public activityRegistry = new Map()
   @observable
-  public selectedActivity: Activity | undefined
-  @observable
-  public editMode: boolean = false
+  public activity: Activity | null = null
   @observable
   public loadingInitial: boolean = false
   @observable
@@ -20,7 +18,7 @@ class ActivityStore {
   public target = ""
 
   @computed
-  public get activitiesByDate() {
+  public get activitiesByDate(): Activity[] {
     return Array.from(this.activityRegistry.values()).sort((a, b) => Date.parse(a.date) - Date.parse(b.date))
   }
 
@@ -36,12 +34,47 @@ class ActivityStore {
         })
       })
     } catch (error) {
-      console.log(error)
-    } finally {
       runInAction("load activities error", () => {
+        console.log(error)
+      })
+    } finally {
+      runInAction("finished loading activities", () => {
         this.loadingInitial = false
       })
     }
+  }
+
+  @action
+  public loadActivity = async (id: string) => {
+    let activity = this.getActivity(id)
+    if (activity) {
+      this.activity = activity
+    } else {
+      this.loadingInitial = true
+      try {
+        activity = await ActivitiesApi.getActivityDetails(id)
+        runInAction("getting activity", () => {
+          this.activity = activity
+        })
+      } catch (error) {
+        runInAction("get activity error", () => {
+          console.log(error)
+        })
+      } finally {
+        runInAction("finished loading activity", () => {
+          this.loadingInitial = false
+        })
+      }
+    }
+  }
+
+  @action
+  public clearActivity = () => {
+    this.activity = null
+  }
+
+  private getActivity = (id: string): Activity | null => {
+    return this.activityRegistry.get(id)
   }
 
   @action
@@ -51,12 +84,13 @@ class ActivityStore {
       await ActivitiesApi.createActivity(activity)
       runInAction("creating activity", () => {
         this.activityRegistry.set(activity.id, activity)
-        this.editMode = false
       })
     } catch (error) {
-      console.log(error)
-    } finally {
       runInAction("create activity error", () => {
+        console.log(error)
+      })
+    } finally {
+      runInAction("finished loading create activity", () => {
         this.submitting = false
       })
     }
@@ -69,13 +103,14 @@ class ActivityStore {
       await ActivitiesApi.updateActivity(activity)
       runInAction("editing an activity", () => {
         this.activityRegistry.set(activity.id, activity)
-        this.selectedActivity = activity
-        this.editMode = false
+        this.activity = activity
       })
     } catch (error) {
-      console.log(error)
-    } finally {
       runInAction("edit activity error", () => {
+        console.log(error)
+      })
+    } finally {
+      runInAction("finished loading activity", () => {
         this.submitting = false
       })
     }
@@ -91,41 +126,15 @@ class ActivityStore {
         this.activityRegistry.delete(id)
       })
     } catch (error) {
-      console.log(error)
-    } finally {
       runInAction("delete activity error", () => {
+        console.log(error)
+      })
+    } finally {
+      runInAction("finished submitting delete method", () => {
         this.submitting = false
         this.target = ""
       })
     }
-  }
-
-  @action
-  public openCreateForm = () => {
-    this.editMode = true
-    this.selectedActivity = undefined
-  }
-
-  @action
-  public openEditForm = (id: string) => {
-    this.selectedActivity = this.activityRegistry.get(id)
-    this.editMode = true
-  }
-
-  @action
-  public cancelEditForm = () => {
-    this.editMode = false
-  }
-
-  @action
-  public resetSelectedActivity = () => {
-    this.selectedActivity = undefined
-  }
-
-  @action
-  public setSelectedActivity = (id: string) => {
-    this.selectedActivity = this.activityRegistry.get(id)
-    this.editMode = false
   }
 }
 
