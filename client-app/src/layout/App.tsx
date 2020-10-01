@@ -23,13 +23,20 @@ const App: FunctionComponent<RouteComponentProps> = ({ location }) => {
 
   return (
     <>
-      <NavBar />
-      <Container className="app-container">
-        <Route exact path="/" component={HomePage} />
-        <Route exact path="/activities" component={ActivityDashboard} />
-        <Route path="/activities/:id" component={ActivityDetails} />
-        <Route key={location.key} path={["/createActivity", "/manage/:id"]} component={ActivityForm} />
-      </Container>
+      <Route exact path="/" component={HomePage} />
+      <Route
+        path={"/(.+)"}
+        render={() => (
+          <>
+            <NavBar />
+            <Container className="app-container">
+              <Route exact path="/activities" component={ActivityDashboard} />
+              <Route path="/activities/:id" component={ActivityDetails} />
+              <Route key={location.key} path={["/createActivity", "/manage/:id"]} component={ActivityForm} />
+            </Container>
+          </>
+        )}
+      />
     </>
   )
 }
