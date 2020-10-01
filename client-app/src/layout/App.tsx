@@ -8,6 +8,7 @@ import { Route } from "react-router-dom"
 import HomePage from "../pages/Home/HomePage"
 import ActivityDashboard from "../components/activities/dashboard/ActivityDashboard"
 import ActivityForm from "../components/activities/form/ActivityForm"
+import ActivityDetails from "../components/activities/details/ActivityDetails"
 
 const App: React.FunctionComponent = () => {
   const { loadingInitial, loadActivities } = useContext(ActivityStore)
@@ -25,7 +26,8 @@ const App: React.FunctionComponent = () => {
       <NavBar />
       <Container className="app-container">
         <Route exact path="/" component={HomePage} />
-        <Route path="/activities" component={ActivityDashboard} />
+        <Route exact path="/activities" component={ActivityDashboard} />
+        <Route path="/activities/:id" component={ActivityDetails} />
         <Route path="/createActivity" component={ActivityForm} />
       </Container>
     </>
