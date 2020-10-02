@@ -4,16 +4,16 @@ import { RouteComponentProps } from "react-router-dom"
 import { Grid } from "semantic-ui-react"
 import LoadingComponent from "../../../layout/LoadingComponent"
 import ActivityStore from "../../../stores/ActivityStore"
-import { ActivityDetailsChat } from "./ActivityDetailsChat"
-import { ActivityDetailsHeader } from "./ActivityDetailsHeader"
-import { ActivityDetailsInfo } from "./ActivityDetailsInfo"
-import { ActivityDetailsSideBar } from "./ActivityDetailsSideBar"
+import ActivityDetailsChat from "./ActivityDetailsChat"
+import ActivityDetailsHeader from "./ActivityDetailsHeader"
+import ActivityDetailsInfo from "./ActivityDetailsInfo"
+import ActivityDetailsSideBar from "./ActivityDetailsSideBar"
 
 export interface IRouteParams {
   id: string
 }
 
-const ActivityDetails: FunctionComponent<RouteComponentProps<IRouteParams>> = ({ match, history }) => {
+const ActivityDetails: FunctionComponent<RouteComponentProps<IRouteParams>> = ({ match }) => {
   const { activity, loadActivity, loadingInitial } = useContext(ActivityStore)
 
   useEffect(() => {
@@ -29,7 +29,7 @@ const ActivityDetails: FunctionComponent<RouteComponentProps<IRouteParams>> = ({
       ) : (
         <Grid>
           <Grid.Column width={10}>
-            <ActivityDetailsHeader />
+            <ActivityDetailsHeader activity={activity} />
             <ActivityDetailsInfo />
             <ActivityDetailsChat />
           </Grid.Column>

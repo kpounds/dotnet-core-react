@@ -1,9 +1,11 @@
 import React from "react"
 
-export const ActivityDetailsInfo = () => {
+const ActivityDetailsInfo = () => {
   return (
     <div>
       <h1>Info</h1>
     </div>
   )
 }
+
+export default ActivityDetailsInfo
