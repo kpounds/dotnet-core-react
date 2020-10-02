@@ -18,8 +18,19 @@ class ActivityStore {
   public target = ""
 
   @computed
-  public get activitiesByDate(): Activity[] {
-    return Array.from(this.activityRegistry.values()).sort((a, b) => Date.parse(a.date) - Date.parse(b.date))
+  public get activitiesByDate(): [string, Activity[]][] {
+    return this.groupActivitiesByDate(Array.from(this.activityRegistry.values()))
+  }
+
+  groupActivitiesByDate(activities: Activity[]) {
+    const sortedActivities = activities.sort((a, b) => Date.parse(a.date) - Date.parse(b.date))
+    return Object.entries(
+      sortedActivities.reduce((activities, activity) => {
+        const date = activity.date.split("T")[0]
+        activities[date] = activities[date] ? [...activities[date], activity] : [activity]
+        return activities
+      }, {} as { [key: string]: Activity[] })
+    )
   }
 
   @action
