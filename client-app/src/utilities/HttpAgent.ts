@@ -2,6 +2,10 @@ import axios, { AxiosResponse } from "axios"
 
 axios.defaults.baseURL = "http://localhost:5000/api"
 
+axios.interceptors.response.use(undefined, (error) => {
+  console.log(error.response)
+})
+
 export interface IHttpResponse<T> extends Response {
   data: T
 }
