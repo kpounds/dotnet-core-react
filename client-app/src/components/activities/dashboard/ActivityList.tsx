@@ -1,6 +1,6 @@
 import { observer } from "mobx-react"
 import React, { Fragment, FunctionComponent, useContext } from "react"
-import { Item, Label, Segment } from "semantic-ui-react"
+import { Item, Label } from "semantic-ui-react"
 import ActivityStore from "../../../stores/ActivityStore"
 import ActivityListItem from "./ActivityListItem"
 
@@ -13,13 +13,11 @@ const ActivityList: FunctionComponent = () => {
           <Label size="large" color="blue">
             {group}
           </Label>
-          <Segment clearing>
-            <Item.Group divided>
-              {activities.map((activity) => (
-                <ActivityListItem key={activity.id} activity={activity} />
-              ))}
-            </Item.Group>
-          </Segment>
+          <Item.Group divided>
+            {activities.map((activity) => (
+              <ActivityListItem key={activity.id} activity={activity} />
+            ))}
+          </Item.Group>
         </Fragment>
       ))}
     </>
