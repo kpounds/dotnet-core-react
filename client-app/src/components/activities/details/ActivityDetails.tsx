@@ -30,7 +30,7 @@ const ActivityDetails: FunctionComponent<RouteComponentProps<IRouteParams>> = ({
         <Grid>
           <Grid.Column width={10}>
             <ActivityDetailsHeader activity={activity} />
-            <ActivityDetailsInfo />
+            <ActivityDetailsInfo activity={activity} />
             <ActivityDetailsChat />
           </Grid.Column>
           <Grid.Column width={6}>
