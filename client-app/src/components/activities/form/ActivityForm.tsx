@@ -9,6 +9,8 @@ import { IRouteParams } from "../details/ActivityDetails"
 import { Form as FinalForm, Field } from "react-final-form"
 import TextInput from "../../common/form/TextInput"
 import TextAreaInput from "../../common/form/TextAreaInput"
+import SelectInput from "../../common/form/SelectInput"
+import { category } from "../../common/options/CategoryOptions"
 
 const ActivityForm: FunctionComponent<RouteComponentProps<IRouteParams>> = ({ history, match }) => {
   const {
@@ -66,7 +68,13 @@ const ActivityForm: FunctionComponent<RouteComponentProps<IRouteParams>> = ({ hi
                   component={TextAreaInput}
                   rows={3}
                 />
-                <Field placeholder="Category" value={activity.category} name="category" component={TextInput} />
+                <Field
+                  placeholder="Category"
+                  value={activity.category}
+                  name="category"
+                  component={SelectInput}
+                  options={category}
+                />
                 <Field placeholder="Date" value={activity.date} name="date" component={TextInput} />
                 <Field placeholder="City" value={activity.city} name="city" component={TextInput} />
                 <Field placeholder="Venue" value={activity.venue} name="venue" component={TextInput} />
