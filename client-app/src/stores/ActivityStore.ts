@@ -68,9 +68,8 @@ class ActivityStore {
           this.activity = activity
         })
       } catch (error) {
-        runInAction("get activity error", () => {
-          console.log(error)
-        })
+        runInAction("get activity error", () => {})
+        console.log(error)
       } finally {
         runInAction("finished loading activity", () => {
           this.loadingInitial = false

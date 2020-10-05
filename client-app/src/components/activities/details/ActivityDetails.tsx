@@ -17,16 +17,14 @@ const ActivityDetails: FunctionComponent<RouteComponentProps<IRouteParams>> = ({
   const { activity, loadActivity, loadingInitial } = useContext(ActivityStore)
 
   useEffect(() => {
-    if (match.params.id) {
-      loadActivity(match.params.id)
-    }
+    loadActivity(match.params.id)
   }, [loadActivity, match.params.id])
 
   return (
     <>
-      {loadingInitial || !activity ? (
+      {loadingInitial ? (
         <LoadingComponent content="Loading activity..." />
-      ) : (
+      ) : activity ? (
         <Grid>
           <Grid.Column width={10}>
             <ActivityDetailsHeader activity={activity} />
@@ -37,6 +35,8 @@ const ActivityDetails: FunctionComponent<RouteComponentProps<IRouteParams>> = ({
             <ActivityDetailsSideBar />
           </Grid.Column>
         </Grid>
+      ) : (
+        <h2>Activity not found</h2>
       )}
     </>
   )
