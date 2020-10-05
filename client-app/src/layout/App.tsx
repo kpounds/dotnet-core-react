@@ -8,10 +8,12 @@ import ActivityDashboard from "../components/activities/dashboard/ActivityDashbo
 import ActivityForm from "../components/activities/form/ActivityForm"
 import ActivityDetails from "../components/activities/details/ActivityDetails"
 import NotFound from "./NotFound"
+import { ToastContainer } from "react-toastify"
 
 const App: FunctionComponent<RouteComponentProps> = ({ location }) => {
   return (
     <>
+      <ToastContainer position="bottom-right" />
       <Route exact path="/" component={HomePage} />
       <Route
         path={"/(.+)"}
