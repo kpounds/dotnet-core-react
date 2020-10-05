@@ -17,9 +17,7 @@ const ActivityDetails: FunctionComponent<RouteComponentProps<IRouteParams>> = ({
   const { activity, loadActivity, loadingInitial } = useContext(ActivityStore)
 
   useEffect(() => {
-    if (match.params.id) {
-      loadActivity(match.params.id)
-    }
+    loadActivity(match.params.id)
   }, [loadActivity, match.params.id])
 
   return (
