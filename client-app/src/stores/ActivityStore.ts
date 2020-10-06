@@ -2,6 +2,7 @@ import { action, computed, observable, configure, runInAction } from "mobx"
 import { createContext, SyntheticEvent } from "react"
 import ActivitiesApi from "../api/ActivitiesApi"
 import { Activity } from "../models/Activity"
+import { history } from ".."
 
 configure({ enforceActions: "always" })
 
@@ -68,6 +69,7 @@ class ActivityStore {
         runInAction("getting activity", () => {
           activity.date = new Date(activity!.date)
           this.activity = activity
+          this.activityRegistry.set(activity.id, activity)
         })
       } catch (error) {
         runInAction("get activity error", () => {})
@@ -98,6 +100,7 @@ class ActivityStore {
       runInAction("creating activity", () => {
         this.activityRegistry.set(activity.id, activity)
       })
+      history.push(`/activities/${activity.id}`)
     } catch (error) {
       runInAction("create activity error", () => {
         console.log(error)
@@ -118,6 +121,7 @@ class ActivityStore {
         this.activityRegistry.set(activity.id, activity)
         this.activity = activity
       })
+      history.push(`/activities/${activity.id}`)
     } catch (error) {
       runInAction("edit activity error", () => {
         console.log(error)

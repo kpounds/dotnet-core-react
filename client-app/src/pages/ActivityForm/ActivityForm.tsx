@@ -27,24 +27,16 @@ const ActivityForm: FunctionComponent<RouteComponentProps<IRouteParams>> = ({ hi
   const [activity, setActivity] = useState(new ActivityFormValues())
   const [loading, setLoading] = useState(false)
 
-  // const handleSubmit = () => {
-  //   if (activity.id.length === 0) {
-  //     const newActivity = { ...activity, id: uuid() }
-  //     createActivity(newActivity).then(() => {
-  //       history.push(`/activities/${newActivity.id}`)
-  //     })
-  //   } else {
-  //     editActivity(activity).then(() => {
-  //       history.push(`/activities/${activity.id}`)
-  //     })
-  //   }
-  // }
-
   const handleFinalFormSubmit = (values: any) => {
     const dateAndTime = combineDateAndTime(values.date!, values.time!)
     const { date, time, ...activity } = values
     activity.date = dateAndTime
-    console.log(activity)
+    if (!activity.id) {
+      const newActivity = { ...activity, id: uuid() }
+      createActivity(newActivity)
+    } else {
+      editActivity(activity)
+    }
   }
 
   useEffect(() => {
@@ -99,7 +91,9 @@ const ActivityForm: FunctionComponent<RouteComponentProps<IRouteParams>> = ({ hi
                   type="button"
                   content="Cancel"
                   disabled={loading}
-                  onClick={() => history.push("/activities")}
+                  onClick={
+                    activity.id ? () => history.push(`/activities/${activity.id}`) : () => history.push("/activities")
+                  }
                 />
               </Form>
             )}
