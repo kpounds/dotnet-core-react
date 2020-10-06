@@ -29,14 +29,7 @@ const validationHandler = combineValidators({
 })
 
 const ActivityForm: FunctionComponent<RouteComponentProps<IRouteParams>> = ({ history, match }) => {
-  const {
-    createActivity,
-    editActivity,
-    submitting,
-    activity: initialFormState,
-    loadActivity,
-    clearActivity,
-  } = useContext(ActivityStore)
+  const { createActivity, editActivity, submitting, loadActivity } = useContext(ActivityStore)
 
   const [activity, setActivity] = useState(new ActivityFormValues())
   const [loading, setLoading] = useState(false)
@@ -70,7 +63,7 @@ const ActivityForm: FunctionComponent<RouteComponentProps<IRouteParams>> = ({ hi
             validate={validationHandler}
             initialValues={activity}
             onSubmit={handleFinalFormSubmit}
-            render={({ handleSubmit }) => (
+            render={({ handleSubmit, invalid, pristine }) => (
               <Form onSubmit={handleSubmit} loading={loading}>
                 <Field placeholder="Title" value={activity.title} name="title" component={TextInput} />
                 <Field
@@ -99,7 +92,7 @@ const ActivityForm: FunctionComponent<RouteComponentProps<IRouteParams>> = ({ hi
                   type="submit"
                   content="Submit"
                   loading={submitting}
-                  disabled={loading}
+                  disabled={loading || invalid || pristine}
                 />
                 <Button
                   floated="right"
