@@ -13,6 +13,8 @@ import SelectInput from "../../common/form/SelectInput"
 import { category } from "../../common/options/CategoryOptions"
 import DateInput from "../../common/form/DateInput"
 import { IActivityFormValues } from "../../../models/ActivityFormValues"
+import { combineDateAndTime } from "../../../utilities/common"
+import { act } from "react-dom/test-utils"
 
 const ActivityForm: FunctionComponent<RouteComponentProps<IRouteParams>> = ({ history, match }) => {
   const {
@@ -40,7 +42,10 @@ const ActivityForm: FunctionComponent<RouteComponentProps<IRouteParams>> = ({ hi
   // }
 
   const handleFinalFormSubmit = (values: any) => {
-    console.log(values)
+    const dateAndTime = combineDateAndTime(values.date!, values.time!)
+    const { date, time, ...activity } = values
+    activity.date = dateAndTime
+    console.log(activity)
   }
 
   useEffect(() => {
