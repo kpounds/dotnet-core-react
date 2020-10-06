@@ -3,6 +3,7 @@ import { createContext, SyntheticEvent } from "react"
 import ActivitiesApi from "../api/ActivitiesApi"
 import { Activity } from "../models/Activity"
 import { history } from ".."
+import { toast } from "react-toastify"
 
 configure({ enforceActions: "always" })
 
@@ -103,8 +104,9 @@ class ActivityStore {
       history.push(`/activities/${activity.id}`)
     } catch (error) {
       runInAction("create activity error", () => {
-        console.log(error)
+        console.log(error.response)
       })
+      toast.error("Problem submitting data")
     } finally {
       runInAction("finished loading create activity", () => {
         this.submitting = false
@@ -124,7 +126,7 @@ class ActivityStore {
       history.push(`/activities/${activity.id}`)
     } catch (error) {
       runInAction("edit activity error", () => {
-        console.log(error)
+        console.log(error.response)
       })
     } finally {
       runInAction("finished loading activity", () => {

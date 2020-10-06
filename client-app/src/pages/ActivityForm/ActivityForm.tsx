@@ -13,6 +13,20 @@ import { category } from "../../components/common/options/CategoryOptions"
 import DateInput from "../../components/common/form/DateInput"
 import { ActivityFormValues } from "../../models/ActivityFormValues"
 import { combineDateAndTime } from "../../utilities/common"
+import { combineValidators, isRequired, composeValidators, hasLengthGreaterThan } from "revalidate"
+
+const validationHandler = combineValidators({
+  title: isRequired({ message: "The event title is required" }),
+  category: isRequired("Category"),
+  description: composeValidators(
+    isRequired("Description"),
+    hasLengthGreaterThan(4)({ message: "Description needs to be at least 5 characters" })
+  )(),
+  city: isRequired("City"),
+  venue: isRequired("Venue"),
+  date: isRequired("Date"),
+  time: isRequired("Time"),
+})
 
 const ActivityForm: FunctionComponent<RouteComponentProps<IRouteParams>> = ({ history, match }) => {
   const {
@@ -53,6 +67,7 @@ const ActivityForm: FunctionComponent<RouteComponentProps<IRouteParams>> = ({ hi
       <Grid.Column width={10}>
         <Segment clearing>
           <FinalForm
+            validate={validationHandler}
             initialValues={activity}
             onSubmit={handleFinalFormSubmit}
             render={({ handleSubmit }) => (
