@@ -2,12 +2,16 @@ import React from "react"
 import ReactDOM from "react-dom"
 import { Router } from "react-router-dom"
 import { createBrowserHistory } from "history"
+import "react-widgets/dist/css/react-widgets.css"
 import "react-toastify/dist/ReactToastify.min.css"
 import "./layout/styles.css"
 import "semantic-ui-css/semantic.min.css"
 import App from "./layout/App"
 import * as serviceWorker from "./serviceWorker"
 import ScrollToTop from "./layout/ScrollToTop"
+import dateFnsLocalizer from "react-widgets-date-fns"
+
+new dateFnsLocalizer()
 
 export const history = createBrowserHistory()
 
