@@ -2,12 +2,12 @@ import { observer } from "mobx-react"
 import React, { FunctionComponent, useContext, useEffect } from "react"
 import { RouteComponentProps } from "react-router-dom"
 import { Grid } from "semantic-ui-react"
-import LoadingComponent from "../../../layout/LoadingComponent"
-import ActivityStore from "../../../stores/ActivityStore"
-import ActivityDetailsChat from "./ActivityDetailsChat"
-import ActivityDetailsHeader from "./ActivityDetailsHeader"
-import ActivityDetailsInfo from "./ActivityDetailsInfo"
-import ActivityDetailsSideBar from "./ActivityDetailsSideBar"
+import LoadingComponent from "../../layout/LoadingComponent"
+import ActivityStore from "../../stores/ActivityStore"
+import ActivityDetailsChat from "../../components/activities/details/ActivityDetailsChat"
+import ActivityDetailsHeader from "../../components/activities/details/ActivityDetailsHeader"
+import ActivityDetailsInfo from "../../components/activities/details/ActivityDetailsInfo"
+import ActivityDetailsSideBar from "../../components/activities/details/ActivityDetailsSideBar"
 
 export interface IRouteParams {
   id: string

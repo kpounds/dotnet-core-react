@@ -1,9 +1,9 @@
 import { observer } from "mobx-react"
 import React, { useContext, useEffect } from "react"
 import { Grid } from "semantic-ui-react"
-import LoadingComponent from "../../../layout/LoadingComponent"
-import ActivityStore from "../../../stores/ActivityStore"
-import ActivityList from "./ActivityList"
+import LoadingComponent from "../../layout/LoadingComponent"
+import ActivityStore from "../../stores/ActivityStore"
+import ActivityList from "../../components/activities/dashboard/ActivityList"
 
 const ActivityDashboard: React.FunctionComponent = () => {
   const { loadingInitial, loadActivities } = useContext(ActivityStore)
