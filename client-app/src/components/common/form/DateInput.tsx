@@ -9,6 +9,8 @@ const DateInput: FunctionComponent<IDateInputProps> = ({
   input,
   width,
   placeholder,
+  date = false,
+  time = false,
   meta: { touched, error },
   id = null,
   ...rest
@@ -19,6 +21,8 @@ const DateInput: FunctionComponent<IDateInputProps> = ({
         placeholder={placeholder}
         value={input.value || null}
         onChange={input.onChange}
+        date={date}
+        time={time}
         {...rest}
         messages={{ dateButton: "Set Date", timeButton: "Set Time" }}
       />

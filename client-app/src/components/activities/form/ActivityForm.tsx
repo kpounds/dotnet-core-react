@@ -12,6 +12,7 @@ import TextAreaInput from "../../common/form/TextAreaInput"
 import SelectInput from "../../common/form/SelectInput"
 import { category } from "../../common/options/CategoryOptions"
 import DateInput from "../../common/form/DateInput"
+import { IActivityFormValues } from "../../../models/ActivityFormValues"
 
 const ActivityForm: FunctionComponent<RouteComponentProps<IRouteParams>> = ({ history, match }) => {
   const {
@@ -23,7 +24,7 @@ const ActivityForm: FunctionComponent<RouteComponentProps<IRouteParams>> = ({ hi
     clearActivity,
   } = useContext(ActivityStore)
 
-  const [activity, setActivity] = useState<Activity>(new Activity())
+  const [activity, setActivity] = useState<IActivityFormValues>({ ...new Activity(), time: undefined })
 
   // const handleSubmit = () => {
   //   if (activity.id.length === 0) {
@@ -43,7 +44,7 @@ const ActivityForm: FunctionComponent<RouteComponentProps<IRouteParams>> = ({ hi
   }
 
   useEffect(() => {
-    if (match.params.id && activity.id.length === 0) {
+    if (match.params.id && activity.id) {
       loadActivity(match.params.id).then(() => {
         initialFormState && setActivity(initialFormState)
       })
@@ -51,7 +52,7 @@ const ActivityForm: FunctionComponent<RouteComponentProps<IRouteParams>> = ({ hi
     return () => {
       clearActivity()
     }
-  }, [loadActivity, clearActivity, match.params.id, initialFormState, activity.id.length])
+  }, [loadActivity, clearActivity, match.params.id, initialFormState, activity.id])
 
   return (
     <Grid>
@@ -76,7 +77,10 @@ const ActivityForm: FunctionComponent<RouteComponentProps<IRouteParams>> = ({ hi
                   component={SelectInput}
                   options={category}
                 />
-                <Field placeholder="Date" value={activity.date} name="date" component={DateInput} />
+                <Form.Group widths="equal">
+                  <Field placeholder="Date" date={true} value={activity.date} name="date" component={DateInput} />
+                  <Field placeholder="Time" time={true} value={activity.date} name="time" component={DateInput} />
+                </Form.Group>
                 <Field placeholder="City" value={activity.city} name="city" component={TextInput} />
                 <Field placeholder="Venue" value={activity.venue} name="venue" component={TextInput} />
                 <Button floated="right" positive type="submit" content="Submit" loading={submitting} />
