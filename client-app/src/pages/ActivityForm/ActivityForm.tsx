@@ -1,6 +1,5 @@
 import React, { FunctionComponent, useContext, useEffect, useState } from "react"
 import { Button, Form, Grid, Segment } from "semantic-ui-react"
-import { Activity } from "../../models/Activity"
 import { v4 as uuid } from "uuid"
 import ActivityStore from "../../stores/ActivityStore"
 import { observer } from "mobx-react"
@@ -12,7 +11,7 @@ import TextAreaInput from "../../components/common/form/TextAreaInput"
 import SelectInput from "../../components/common/form/SelectInput"
 import { category } from "../../components/common/options/CategoryOptions"
 import DateInput from "../../components/common/form/DateInput"
-import { IActivityFormValues } from "../../models/ActivityFormValues"
+import { ActivityFormValues } from "../../models/ActivityFormValues"
 import { combineDateAndTime } from "../../utilities/common"
 
 const ActivityForm: FunctionComponent<RouteComponentProps<IRouteParams>> = ({ history, match }) => {
@@ -25,7 +24,8 @@ const ActivityForm: FunctionComponent<RouteComponentProps<IRouteParams>> = ({ hi
     clearActivity,
   } = useContext(ActivityStore)
 
-  const [activity, setActivity] = useState<IActivityFormValues>({ ...new Activity(), time: undefined })
+  const [activity, setActivity] = useState(new ActivityFormValues())
+  const [loading, setLoading] = useState(false)
 
   // const handleSubmit = () => {
   //   if (activity.id.length === 0) {
@@ -48,24 +48,23 @@ const ActivityForm: FunctionComponent<RouteComponentProps<IRouteParams>> = ({ hi
   }
 
   useEffect(() => {
-    if (match.params.id && activity.id) {
-      loadActivity(match.params.id).then(() => {
-        initialFormState && setActivity(initialFormState)
-      })
+    if (match.params.id) {
+      setLoading(true)
+      loadActivity(match.params.id)
+        .then((activity) => setActivity(new ActivityFormValues(activity)))
+        .finally(() => setLoading(false))
     }
-    return () => {
-      clearActivity()
-    }
-  }, [loadActivity, clearActivity, match.params.id, initialFormState, activity.id])
+  }, [loadActivity, match.params.id])
 
   return (
     <Grid>
       <Grid.Column width={10}>
         <Segment clearing>
           <FinalForm
+            initialValues={activity}
             onSubmit={handleFinalFormSubmit}
             render={({ handleSubmit }) => (
-              <Form onSubmit={handleSubmit}>
+              <Form onSubmit={handleSubmit} loading={loading}>
                 <Field placeholder="Title" value={activity.title} name="title" component={TextInput} />
                 <Field
                   placeholder="Description"
@@ -87,8 +86,21 @@ const ActivityForm: FunctionComponent<RouteComponentProps<IRouteParams>> = ({ hi
                 </Form.Group>
                 <Field placeholder="City" value={activity.city} name="city" component={TextInput} />
                 <Field placeholder="Venue" value={activity.venue} name="venue" component={TextInput} />
-                <Button floated="right" positive type="submit" content="Submit" loading={submitting} />
-                <Button floated="right" type="button" content="Cancel" onClick={() => history.push("/activities")} />
+                <Button
+                  floated="right"
+                  positive
+                  type="submit"
+                  content="Submit"
+                  loading={submitting}
+                  disabled={loading}
+                />
+                <Button
+                  floated="right"
+                  type="button"
+                  content="Cancel"
+                  disabled={loading}
+                  onClick={() => history.push("/activities")}
+                />
               </Form>
             )}
           />

@@ -56,16 +56,17 @@ class ActivityStore {
   }
 
   @action
-  public loadActivity = async (id: string) => {
+  public loadActivity = async (id: string): Promise<Activity> => {
     let activity = this.getActivity(id)
     if (activity) {
       this.activity = activity
+      return activity
     } else {
       this.loadingInitial = true
       try {
         activity = await ActivitiesApi.getActivityDetails(id)
         runInAction("getting activity", () => {
-          activity!.date = new Date(activity!.date)
+          activity.date = new Date(activity!.date)
           this.activity = activity
         })
       } catch (error) {
@@ -75,6 +76,7 @@ class ActivityStore {
         runInAction("finished loading activity", () => {
           this.loadingInitial = false
         })
+        return activity
       }
     }
   }
@@ -84,7 +86,7 @@ class ActivityStore {
     this.activity = null
   }
 
-  private getActivity = (id: string): Activity | null => {
+  private getActivity = (id: string): Activity => {
     return this.activityRegistry.get(id)
   }
 
