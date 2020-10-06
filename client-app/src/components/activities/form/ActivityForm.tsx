@@ -14,7 +14,6 @@ import { category } from "../../common/options/CategoryOptions"
 import DateInput from "../../common/form/DateInput"
 import { IActivityFormValues } from "../../../models/ActivityFormValues"
 import { combineDateAndTime } from "../../../utilities/common"
-import { act } from "react-dom/test-utils"
 
 const ActivityForm: FunctionComponent<RouteComponentProps<IRouteParams>> = ({ history, match }) => {
   const {
