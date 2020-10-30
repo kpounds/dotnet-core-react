@@ -3,18 +3,19 @@ import React, { FunctionComponent, useContext, useEffect } from "react"
 import { RouteComponentProps } from "react-router-dom"
 import { Grid } from "semantic-ui-react"
 import LoadingComponent from "../../layout/LoadingComponent"
-import ActivityStore from "../../stores/ActivityStore"
 import ActivityDetailsChat from "../../components/activities/details/ActivityDetailsChat"
 import ActivityDetailsHeader from "../../components/activities/details/ActivityDetailsHeader"
 import ActivityDetailsInfo from "../../components/activities/details/ActivityDetailsInfo"
 import ActivityDetailsSideBar from "../../components/activities/details/ActivityDetailsSideBar"
+import { RootStoreContext } from "../../stores/RootStore"
 
 export interface IRouteParams {
   id: string
 }
 
 const ActivityDetails: FunctionComponent<RouteComponentProps<IRouteParams>> = ({ match }) => {
-  const { activity, loadActivity, loadingInitial } = useContext(ActivityStore)
+  const rootStore = useContext(RootStoreContext)
+  const { activity, loadActivity, loadingInitial } = rootStore.activityStore
 
   useEffect(() => {
     loadActivity(match.params.id)

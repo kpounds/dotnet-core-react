@@ -1,9 +1,14 @@
 import { action, computed, observable, runInAction } from "mobx"
-import { createContext } from "react"
 import UserApi from "../api/UserApi"
 import { IUser, IUserFormValues } from "../models/User"
+import { RootStore } from "./RootStore"
 
-class UserStore {
+export default class UserStore {
+  public rootStore: RootStore
+  constructor(rootStore: RootStore) {
+    this.rootStore = rootStore
+  }
+
   @observable
   public user: IUser | null = null
 
@@ -24,5 +29,3 @@ class UserStore {
     }
   }
 }
-
-export default createContext(new UserStore())
