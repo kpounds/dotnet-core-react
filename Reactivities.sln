@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Persistence", "Persistence\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "API", "API\API.csproj", "{465A9983-1ED5-43FC-B138-D1227FA591B0}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infrastructure", "Infrastructure\Infrastructure.csproj", "{1D157CA4-4D1A-4B1F-8713-A2CE94EC0143}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -72,5 +74,17 @@ Global
 		{465A9983-1ED5-43FC-B138-D1227FA591B0}.Release|x64.Build.0 = Release|Any CPU
 		{465A9983-1ED5-43FC-B138-D1227FA591B0}.Release|x86.ActiveCfg = Release|Any CPU
 		{465A9983-1ED5-43FC-B138-D1227FA591B0}.Release|x86.Build.0 = Release|Any CPU
+		{1D157CA4-4D1A-4B1F-8713-A2CE94EC0143}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1D157CA4-4D1A-4B1F-8713-A2CE94EC0143}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1D157CA4-4D1A-4B1F-8713-A2CE94EC0143}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{1D157CA4-4D1A-4B1F-8713-A2CE94EC0143}.Debug|x64.Build.0 = Debug|Any CPU
+		{1D157CA4-4D1A-4B1F-8713-A2CE94EC0143}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{1D157CA4-4D1A-4B1F-8713-A2CE94EC0143}.Debug|x86.Build.0 = Debug|Any CPU
+		{1D157CA4-4D1A-4B1F-8713-A2CE94EC0143}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1D157CA4-4D1A-4B1F-8713-A2CE94EC0143}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1D157CA4-4D1A-4B1F-8713-A2CE94EC0143}.Release|x64.ActiveCfg = Release|Any CPU
+		{1D157CA4-4D1A-4B1F-8713-A2CE94EC0143}.Release|x64.Build.0 = Release|Any CPU
+		{1D157CA4-4D1A-4B1F-8713-A2CE94EC0143}.Release|x86.ActiveCfg = Release|Any CPU
+		{1D157CA4-4D1A-4B1F-8713-A2CE94EC0143}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
