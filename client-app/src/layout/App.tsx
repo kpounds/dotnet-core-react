@@ -7,6 +7,7 @@ import HomePage from "../pages/Home/HomePage"
 import ActivityDashboard from "../pages/ActivityDashboard/ActivityDashboard"
 import ActivityForm from "../pages/ActivityForm/ActivityForm"
 import ActivityDetails from "../pages/ActivityDetails/ActivityDetails"
+import Login from "../pages/Login/Login"
 import NotFound from "./NotFound"
 import { ToastContainer } from "react-toastify"
 
@@ -25,6 +26,7 @@ const App: FunctionComponent<RouteComponentProps> = ({ location }) => {
                 <Route exact path="/activities" component={ActivityDashboard} />
                 <Route path="/activities/:id" component={ActivityDetails} />
                 <Route key={location.key} path={["/createActivity", "/manage/:id"]} component={ActivityForm} />
+                <Route path="/login" component={Login} />
                 <Route component={NotFound} />
               </Switch>
             </Container>
