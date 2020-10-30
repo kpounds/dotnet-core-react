@@ -1,4 +1,5 @@
 import { action, computed, observable, runInAction } from "mobx"
+import { history } from ".."
 import UserApi from "../api/UserApi"
 import { IUser, IUserFormValues } from "../models/User"
 import { RootStore } from "./RootStore"
@@ -24,9 +25,9 @@ export default class UserStore {
       runInAction(() => {
         this.user = user
       })
-      console.log("user", user)
+      history.push("/activities")
     } catch (error) {
-      console.log(error)
+      throw error.response
     }
   }
 }
