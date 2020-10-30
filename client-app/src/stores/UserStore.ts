@@ -24,6 +24,7 @@ export default class UserStore {
       runInAction(() => {
         this.user = user
       })
+      console.log("user", user)
     } catch (error) {
       console.log(error)
     }
