@@ -52,7 +52,7 @@ export default class ActivityStore {
       })
     } catch (error) {
       runInAction("load activities error", () => {
-        console.log(error)
+        console.log(error.response)
       })
     } finally {
       runInAction("finished loading activities", () => {
@@ -78,7 +78,7 @@ export default class ActivityStore {
         })
       } catch (error) {
         runInAction("get activity error", () => {})
-        console.log(error)
+        console.log(error.response)
       } finally {
         runInAction("finished loading activity", () => {
           this.loadingInitial = false

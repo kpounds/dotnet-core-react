@@ -22,12 +22,20 @@ export default class UserStore {
   public login = async (values: IUserFormValues) => {
     try {
       const user = await UserApi.login(values)
-      runInAction(() => {
+      runInAction("Set logged in user", () => {
         this.user = user
       })
+      this.rootStore.commonStore.setToken(user.token)
       history.push("/activities")
     } catch (error) {
       throw error.response
     }
+  }
+
+  @action
+  public logout = () => {
+    this.rootStore.commonStore.setToken(null)
+    this.user = null
+    history.push("/")
   }
 }
