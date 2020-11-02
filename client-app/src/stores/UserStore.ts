@@ -14,7 +14,7 @@ export default class UserStore {
   public user: IUser | null = null
 
   @computed
-  public get itLoggedIn() {
+  public get isLoggedIn() {
     return !!this.user
   }
 
