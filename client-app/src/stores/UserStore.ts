@@ -26,6 +26,19 @@ export default class UserStore {
         this.user = user
       })
       this.rootStore.commonStore.setToken(user.token)
+      this.rootStore.modalStore.closeModal()
+      history.push("/activities")
+    } catch (error) {
+      throw error.response
+    }
+  }
+
+  @action
+  public register = async (values: IUserFormValues) => {
+    try {
+      const user = await UserApi.register(values)
+      this.rootStore.commonStore.setToken(user.token)
+      this.rootStore.modalStore.closeModal()
       history.push("/activities")
     } catch (error) {
       throw error.response

@@ -2,6 +2,7 @@ import React, { useContext } from "react"
 import { Link } from "react-router-dom"
 import { Button, Container, Header, Segment, Image } from "semantic-ui-react"
 import LoginForm from "../../components/user/LoginForm"
+import RegisterForm from "../../components/user/RegisterForm"
 import { RootStoreContext } from "../../stores/RootStore"
 
 const HomePage = () => {
@@ -28,7 +29,7 @@ const HomePage = () => {
             <Button onClick={() => openModal(<LoginForm />)} size="huge" inverted>
               Login
             </Button>
-            <Button as={Link} to="/register" size="huge" inverted>
+            <Button onClick={() => openModal(<RegisterForm />)} size="huge" inverted>
               Register
             </Button>
           </>
