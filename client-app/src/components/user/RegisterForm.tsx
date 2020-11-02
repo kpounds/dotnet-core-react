@@ -9,33 +9,35 @@ import ErrorMessage from "../common/form/ErrorMessage"
 import TextInput from "../common/form/TextInput"
 
 const validate = combineValidators({
+  username: isRequired("username"),
+  displayName: isRequired("displayName"),
   email: isRequired("email"),
   password: isRequired("password"),
 })
 
-const LoginForm = () => {
+const RegisterForm = () => {
   const { userStore } = useContext(RootStoreContext)
-  const { login } = userStore
+  const { register } = userStore
   return (
     <FinalForm
       onSubmit={(values: IUserFormValues) =>
-        login(values).catch((error) => ({
+        register(values).catch((error) => ({
           [FORM_ERROR]: error,
         }))
       }
       validate={validate}
       render={({ handleSubmit, submitting, submitError, invalid, pristine, dirtySinceLastSubmit }) => (
         <Form onSubmit={handleSubmit} error>
-          <Header as="h2" content="Login to Reactivities" color="teal" textAlign="center" />
+          <Header as="h2" content="Sign up to Reactivities" color="teal" textAlign="center" />
+          <Field name="username" component={TextInput} placeholder="Username" />
+          <Field name="displayName" component={TextInput} placeholder="Display Name" />
           <Field name="email" component={TextInput} placeholder="Email" />
           <Field name="password" component={TextInput} placeholder="Password" type="password" />
-          {submitError && !dirtySinceLastSubmit && (
-            <ErrorMessage error={submitError} text="Invalid email or password" />
-          )}
+          {submitError && !dirtySinceLastSubmit && <ErrorMessage error={submitError} />}
           <Button
             loading={submitting}
             color="teal"
-            content="Login"
+            content="Register"
             fluid
             disabled={(invalid && !dirtySinceLastSubmit) || pristine}
           />
@@ -45,4 +47,4 @@ const LoginForm = () => {
   )
 }
 
-export default LoginForm
+export default RegisterForm

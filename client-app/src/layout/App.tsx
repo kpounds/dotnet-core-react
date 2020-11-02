@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from "react"
+import React, { FunctionComponent, useContext, useEffect } from "react"
 import { Container } from "semantic-ui-react"
 import NavBar from "../components/nav/NavBar"
 import { observer } from "mobx-react"
@@ -10,10 +10,30 @@ import ActivityDetails from "../pages/ActivityDetails/ActivityDetails"
 import Login from "../pages/Login/Login"
 import NotFound from "./NotFound"
 import { ToastContainer } from "react-toastify"
+import { RootStoreContext } from "../stores/RootStore"
+import LoadingComponent from "./LoadingComponent"
+import ModalContainer from "../components/common/modals/ModalContainer"
 
 const App: FunctionComponent<RouteComponentProps> = ({ location }) => {
+  const rootStore = useContext(RootStoreContext)
+  const { setAppLoaded, token, appLoaded } = rootStore.commonStore
+  const { getUser } = rootStore.userStore
+
+  useEffect(() => {
+    if (token) {
+      getUser().finally(() => setAppLoaded())
+    } else {
+      setAppLoaded()
+    }
+  }, [getUser, token, setAppLoaded])
+
+  if (!appLoaded) {
+    return <LoadingComponent content="Loading app..." />
+  }
+
   return (
     <>
+      <ModalContainer />
       <ToastContainer position="bottom-right" />
       <Route exact path="/" component={HomePage} />
       <Route

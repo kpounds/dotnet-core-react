@@ -1,3 +1,4 @@
+import { format } from "date-fns"
 import { observer } from "mobx-react"
 import React, { Fragment, FunctionComponent, useContext } from "react"
 import { Item, Label } from "semantic-ui-react"
@@ -12,7 +13,7 @@ const ActivityList: FunctionComponent = () => {
       {activitiesByDate.map(([group, activities]) => (
         <Fragment key={group}>
           <Label size="large" color="blue">
-            {group}
+            {format(group, "eeee, MMMM do")}
           </Label>
           <Item.Group divided>
             {activities.map((activity) => (
