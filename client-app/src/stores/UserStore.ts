@@ -33,6 +33,18 @@ export default class UserStore {
   }
 
   @action
+  public getUser = async () => {
+    try {
+      const user = await UserApi.current()
+      runInAction("Get and set current user", () => {
+        this.user = user
+      })
+    } catch (error) {
+      console.log(error.response)
+    }
+  }
+
+  @action
   public logout = () => {
     this.rootStore.commonStore.setToken(null)
     this.user = null
