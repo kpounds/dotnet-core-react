@@ -28,7 +28,7 @@ export default class ActivityStore {
     return this.groupActivitiesByDate(Array.from(this.activityRegistry.values()))
   }
 
-  groupActivitiesByDate(activities: Activity[]) {
+  private groupActivitiesByDate(activities: Activity[]) {
     const sortedActivities = activities.sort((a, b) => a.date.getTime() - b.date.getTime())
     return Object.entries(
       sortedActivities.reduce((activities, activity) => {
