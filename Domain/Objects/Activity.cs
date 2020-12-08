@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using Domain;
 
-namespace Domain
+namespace Domain.Objects
 {
   public class Activity
   {

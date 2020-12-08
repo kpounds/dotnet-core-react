@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Application.Errors;
 using Application.Interfaces;
 using Application.Validators;
-using Domain;
+using Domain.Objects;
 using FluentValidation;
 using MediatR;
 using Microsoft.AspNetCore.Identity;

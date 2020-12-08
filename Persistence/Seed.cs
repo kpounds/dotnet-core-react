@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Domain;
+using Domain.Objects;
 using Microsoft.AspNetCore.Identity;
 
 namespace Persistence

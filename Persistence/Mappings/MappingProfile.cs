@@ -1,5 +1,5 @@
 using AutoMapper;
-using Domain;
+using Domain.Objects;
 using Domain.Objects.Models;
 
 namespace Persistence.Mappings

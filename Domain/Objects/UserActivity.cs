@@ -1,6 +1,6 @@
 using System;
 
-namespace Domain
+namespace Domain.Objects
 {
   public class UserActivity
   {

@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Application.Activities;
 using Application.Activities.Commands;
-using Domain;
+using Domain.Objects;
+using Domain.Objects.Models;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -20,7 +21,7 @@ namespace API.Controllers
 
     [HttpGet("{id}")]
     [Authorize]
-    public async Task<ActionResult<Activity>> Details(Guid id)
+    public async Task<ActionResult<ActivityDto>> Details(Guid id)
     {
       return await Mediator.Send(new Details.Query { Id = id });
     }

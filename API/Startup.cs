@@ -1,6 +1,6 @@
 using Application.Activities;
 using API.Middleware;
-using Domain.Models;
+using Domain.Objects;
 using FluentValidation.AspNetCore;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
