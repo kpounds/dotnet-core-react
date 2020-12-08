@@ -4,6 +4,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Application.Errors;
 using Domain;
+using Domain.Objects.Models;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Persistence;
@@ -17,7 +18,7 @@ namespace Application.Activities
       public Guid Id { get; set; }
     }
 
-    public class Handler : IRequestHandler<Query, Activity>
+    public class Handler : IRequestHandler<Query, ActivityDto>
     {
       private readonly DataContext _context;
       public Handler(DataContext context)
@@ -25,7 +26,7 @@ namespace Application.Activities
         _context = context;
       }
 
-      public async Task<Activity> Handle(Query request, CancellationToken cancellationToken)
+      public async Task<ActivityDto> Handle(Query request, CancellationToken cancellationToken)
       {
         var activity = await _context.Activities
           .Include(x => x.UserActivities)
