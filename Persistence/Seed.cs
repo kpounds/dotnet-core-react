@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Domain;
-using Domain.Models;
 using Microsoft.AspNetCore.Identity;
 
 namespace Persistence
@@ -12,7 +11,7 @@ namespace Persistence
   {
     public static async Task SeedData(DataContext context, UserManager<AppUser> userManager)
     {
-      if(!userManager.Users.Any())
+      if (!userManager.Users.Any())
       {
         var users = new List<AppUser>
         {
@@ -35,7 +34,7 @@ namespace Persistence
             Email = "jane@test.com"
           }
         };
-        foreach(var user in users)
+        foreach (var user in users)
         {
           await userManager.CreateAsync(user, "Pa$$w0rd");
         }

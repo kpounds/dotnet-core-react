@@ -3,7 +3,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using Application.Interfaces;
 using Domain;
-using Domain.Models;
 using FluentValidation;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
