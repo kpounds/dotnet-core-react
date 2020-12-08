@@ -1,11 +1,11 @@
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Identity;
 
-namespace Domain.Models
+namespace Domain.Objects
 {
   public class AppUser : IdentityUser
   {
     public string DisplayName { get; set; }
-    public ICollection<UserActivity> UserActivities { get; set; }
+    public virtual ICollection<UserActivity> UserActivities { get; set; }
   }
 }

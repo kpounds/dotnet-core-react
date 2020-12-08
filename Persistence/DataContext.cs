@@ -1,5 +1,4 @@
-﻿using Domain;
-using Domain.Models;
+﻿using Domain.Objects;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 

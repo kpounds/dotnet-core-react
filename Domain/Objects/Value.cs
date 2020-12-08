@@ -1,4 +1,4 @@
-﻿namespace Domain
+﻿namespace Domain.Objects
 {
   public class Value
   {

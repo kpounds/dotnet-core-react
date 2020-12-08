@@ -1,7 +1,7 @@
 using System.Threading;
 using System.Threading.Tasks;
 using Application.Interfaces;
-using Domain.Models;
+using Domain.Objects;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 
