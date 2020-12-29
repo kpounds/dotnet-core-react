@@ -1,20 +1,33 @@
 import React, { FunctionComponent } from "react"
 import { Link } from "react-router-dom"
-import { Button, Icon, Item, Segment } from "semantic-ui-react"
+import { Button, Icon, Item, Label, Segment } from "semantic-ui-react"
 import { Activity } from "../../../models/Activity"
 import { format } from "date-fns"
 import ActivityListItemAttendees from "./ActivityListItemAttendees"
 
 const ActivityListItem: FunctionComponent<{ activity: Activity }> = ({ activity }) => {
+  const host = activity.attendees.filter((x) => x.isHost)[0]
   return (
     <Segment.Group>
       <Segment>
         <Item.Group>
           <Item>
-            <Item.Image size="tiny" circular src="/assets/user.png" />
+            <Item.Image size="tiny" circular src={host.image || "/assets/user.png"} />
             <Item.Content>
-              <Item.Header as="a">{activity.title}</Item.Header>
-              <Item.Description>Hosted by Keith</Item.Description>
+              <Item.Header as={Link} to={`/activities/${activity.id}`}>
+                {activity.title}
+              </Item.Header>
+              <Item.Description>Hosted by {host.displayName}</Item.Description>
+              {activity.isHost && (
+                <Item.Description>
+                  <Label basic color="orange" content="You are hosting this activity"></Label>
+                </Item.Description>
+              )}
+              {activity.isGoing && !activity.isHost && (
+                <Item.Description>
+                  <Label basic color="green" content="You are going to this activity"></Label>
+                </Item.Description>
+              )}
             </Item.Content>
           </Item>
         </Item.Group>

@@ -8,5 +8,7 @@ export class Activity {
   public date: Date = new Date()
   public city: string = ""
   public venue: string = ""
+  public isGoing: boolean = false
+  public isHost: boolean = false
   public attendees: IAttendee[] = []
 }
