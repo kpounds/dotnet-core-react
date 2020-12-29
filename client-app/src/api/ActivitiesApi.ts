@@ -12,6 +12,10 @@ class ActivitiesApi {
     HttpAgent.put(`/activities/${activity.id}`, activity)
 
   public deleteActivity = async (id: string): Promise<void> => HttpAgent.delete(`/activities/${id}`)
+
+  public attendActivity = async (id: string): Promise<void> => HttpAgent.post(`/activities/${id}/attend`, {})
+
+  public unattendActivity = async (id: string): Promise<void> => HttpAgent.delete(`/activities/${id}/attend`)
 }
 
 export default new ActivitiesApi()

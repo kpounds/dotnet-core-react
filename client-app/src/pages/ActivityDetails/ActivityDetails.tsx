@@ -33,7 +33,7 @@ const ActivityDetails: FunctionComponent<RouteComponentProps<IRouteParams>> = ({
             <ActivityDetailsChat />
           </Grid.Column>
           <Grid.Column width={6}>
-            <ActivityDetailsSideBar />
+            <ActivityDetailsSideBar attendees={activity.attendees} />
           </Grid.Column>
         </Grid>
       ) : (
