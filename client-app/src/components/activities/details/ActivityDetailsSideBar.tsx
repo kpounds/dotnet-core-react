@@ -9,7 +9,6 @@ interface IActivityDetailsSideBarProps {
 }
 
 const ActivityDetailsSideBar: FunctionComponent<IActivityDetailsSideBarProps> = ({ attendees }) => {
-  const isHost = false
   return (
     <Fragment>
       <Segment textAlign="center" style={{ border: "none" }} attached="top" secondary inverted color="teal">
@@ -19,7 +18,7 @@ const ActivityDetailsSideBar: FunctionComponent<IActivityDetailsSideBarProps> = 
         <List relaxed divided>
           {attendees.map((attendee) => (
             <Item key={attendee.username} style={{ position: "relative" }}>
-              {isHost && (
+              {attendee.isHost && (
                 <Label style={{ position: "absolute" }} color="orange" ribbon="right">
                   Host
                 </Label>
