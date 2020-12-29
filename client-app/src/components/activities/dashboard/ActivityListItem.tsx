@@ -3,6 +3,7 @@ import { Link } from "react-router-dom"
 import { Button, Icon, Item, Segment } from "semantic-ui-react"
 import { Activity } from "../../../models/Activity"
 import { format } from "date-fns"
+import ActivityListItemAttendees from "./ActivityListItemAttendees"
 
 const ActivityListItem: FunctionComponent<{ activity: Activity }> = ({ activity }) => {
   return (
@@ -22,7 +23,9 @@ const ActivityListItem: FunctionComponent<{ activity: Activity }> = ({ activity 
         <Icon name="clock" /> {format(activity.date, "h:mm a")}
         <Icon name="marker" /> {activity.venue}, {activity.city}
       </Segment>
-      <Segment secondary>Attendees will go here</Segment>
+      <Segment secondary>
+        <ActivityListItemAttendees attendees={activity.attendees} />
+      </Segment>
       <Segment clearing>
         <span>{activity.description}</span>
         <Button floated="right" content="View" color="blue" as={Link} to={`/activities/${activity.id}`} />

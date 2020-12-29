@@ -1,3 +1,5 @@
+import { IAttendee } from "./Attendee"
+
 export class Activity {
   public id: string = ""
   public title: string = ""
@@ -6,4 +8,5 @@ export class Activity {
   public date: Date = new Date()
   public city: string = ""
   public venue: string = ""
+  public attendees: IAttendee[] = []
 }
