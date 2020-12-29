@@ -1,3 +1,4 @@
+import { observer } from "mobx-react"
 import React, { Fragment, FunctionComponent } from "react"
 import { Link } from "react-router-dom"
 import { Segment, List, Item, Label, Image } from "semantic-ui-react"
@@ -38,4 +39,4 @@ const ActivityDetailsSideBar: FunctionComponent<IActivityDetailsSideBarProps> = 
   )
 }
 
-export default ActivityDetailsSideBar
+export default observer(ActivityDetailsSideBar)

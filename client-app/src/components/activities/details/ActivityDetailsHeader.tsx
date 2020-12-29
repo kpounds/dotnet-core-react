@@ -1,9 +1,10 @@
 import { format } from "date-fns"
 import { observer } from "mobx-react"
-import React, { FunctionComponent } from "react"
+import React, { FunctionComponent, useContext } from "react"
 import { Link } from "react-router-dom"
 import { Segment, Image, Button, Header, Item } from "semantic-ui-react"
 import { Activity } from "../../../models/Activity"
+import { RootStoreContext } from "../../../stores/RootStore"
 
 const activityImageStyle = {
   filter: "brightness(30%)",
@@ -19,6 +20,8 @@ const activityImageTextStyle = {
 }
 
 const ActivityDetailsHeader: FunctionComponent<{ activity: Activity }> = ({ activity }) => {
+  const rootStore = useContext(RootStoreContext)
+  const { attendActivity, cancelAttendance } = rootStore.activityStore
   return (
     <Segment.Group>
       <Segment basic attached="top" style={{ padding: "0" }}>
@@ -43,9 +46,11 @@ const ActivityDetailsHeader: FunctionComponent<{ activity: Activity }> = ({ acti
             Manage Event
           </Button>
         ) : activity.isGoing ? (
-          <Button>Cancel attendance</Button>
+          <Button onClick={cancelAttendance}>Cancel attendance</Button>
         ) : (
-          <Button color="teal">Join Activity</Button>
+          <Button color="teal" onClick={attendActivity}>
+            Join Activity
+          </Button>
         )}
       </Segment>
     </Segment.Group>

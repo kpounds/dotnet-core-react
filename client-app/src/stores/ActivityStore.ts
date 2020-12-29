@@ -5,7 +5,7 @@ import { Activity } from "../models/Activity"
 import { history } from ".."
 import { toast } from "react-toastify"
 import { RootStore } from "./RootStore"
-import { setActivityProps } from "../utilities/common"
+import { createAttendee, setActivityProps } from "../utilities/common"
 
 export default class ActivityStore {
   public rootStore: RootStore
@@ -158,6 +158,27 @@ export default class ActivityStore {
         this.submitting = false
         this.target = ""
       })
+    }
+  }
+
+  @action
+  public attendActivity = () => {
+    const attendee = createAttendee(this.rootStore.userStore.user!)
+    if (this.activity) {
+      this.activity.attendees.push(attendee)
+      this.activity.isGoing = true
+      this.activityRegistry.set(this.activity.id, this.activity)
+    }
+  }
+
+  @action
+  public cancelAttendance = () => {
+    if (this.activity) {
+      this.activity.attendees = this.activity.attendees.filter(
+        (x) => x.username !== this.rootStore.userStore.user!.username
+      )
+      this.activity.isGoing = false
+      this.activityRegistry.set(this.activity.id, this.activity)
     }
   }
 }
