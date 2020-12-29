@@ -23,6 +23,8 @@ export default class ActivityStore {
   public submitting: boolean = false
   @observable
   public target = ""
+  @observable
+  public loading: boolean = false
 
   @computed
   public get activitiesByDate(): [string, Activity[]][] {
@@ -162,23 +164,47 @@ export default class ActivityStore {
   }
 
   @action
-  public attendActivity = () => {
+  public attendActivity = async () => {
     const attendee = createAttendee(this.rootStore.userStore.user!)
-    if (this.activity) {
-      this.activity.attendees.push(attendee)
-      this.activity.isGoing = true
-      this.activityRegistry.set(this.activity.id, this.activity)
+    this.loading = true
+    try {
+      await ActivitiesApi.attendActivity(this.activity!.id)
+      runInAction(() => {
+        if (this.activity) {
+          this.activity.attendees.push(attendee)
+          this.activity.isGoing = true
+          this.activityRegistry.set(this.activity.id, this.activity)
+        }
+      })
+    } catch (error) {
+      toast.error("Problem signing up to activity")
+    } finally {
+      runInAction(() => {
+        this.loading = false
+      })
     }
   }
 
   @action
-  public cancelAttendance = () => {
-    if (this.activity) {
-      this.activity.attendees = this.activity.attendees.filter(
-        (x) => x.username !== this.rootStore.userStore.user!.username
-      )
-      this.activity.isGoing = false
-      this.activityRegistry.set(this.activity.id, this.activity)
+  public cancelAttendance = async () => {
+    this.loading = true
+    try {
+      await ActivitiesApi.unattendActivity(this.activity!.id)
+      runInAction(() => {
+        if (this.activity) {
+          this.activity.attendees = this.activity.attendees.filter(
+            (x) => x.username !== this.rootStore.userStore.user!.username
+          )
+          this.activity.isGoing = false
+          this.activityRegistry.set(this.activity.id, this.activity)
+        }
+      })
+    } catch (error) {
+      toast.error("Problem canceling attendance")
+    } finally {
+      runInAction(() => {
+        this.loading = false
+      })
     }
   }
 }

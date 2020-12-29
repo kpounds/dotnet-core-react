@@ -21,7 +21,7 @@ const activityImageTextStyle = {
 
 const ActivityDetailsHeader: FunctionComponent<{ activity: Activity }> = ({ activity }) => {
   const rootStore = useContext(RootStoreContext)
-  const { attendActivity, cancelAttendance } = rootStore.activityStore
+  const { attendActivity, cancelAttendance, loading } = rootStore.activityStore
   return (
     <Segment.Group>
       <Segment basic attached="top" style={{ padding: "0" }}>
@@ -46,9 +46,11 @@ const ActivityDetailsHeader: FunctionComponent<{ activity: Activity }> = ({ acti
             Manage Event
           </Button>
         ) : activity.isGoing ? (
-          <Button onClick={cancelAttendance}>Cancel attendance</Button>
+          <Button loading={loading} onClick={cancelAttendance}>
+            Cancel attendance
+          </Button>
         ) : (
-          <Button color="teal" onClick={attendActivity}>
+          <Button loading={loading} color="teal" onClick={attendActivity}>
             Join Activity
           </Button>
         )}
