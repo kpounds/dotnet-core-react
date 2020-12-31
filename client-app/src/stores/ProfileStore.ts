@@ -88,4 +88,21 @@ export default class ProfileStore {
       })
     }
   }
+
+  @action
+  public deletePhoto = async (photo: IPhoto) => {
+    this.loading = true
+    try {
+      await ProfilesApi.deletePhoto(photo.id)
+      runInAction(() => {
+        this.profile!.photos = this.profile!.photos.filter((x) => x.id !== photo.id)
+      })
+    } catch (error) {
+      toast.error("Problem deleting the photo")
+    } finally {
+      runInAction(() => {
+        this.loading = false
+      })
+    }
+  }
 }

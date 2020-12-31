@@ -6,9 +6,18 @@ import PhotoUploadWidget from "../common/photoUpload/PhotoUploadWidget"
 
 const ProfilePhotos = () => {
   const rootStore = useContext(RootStoreContext)
-  const { profile, isCurrentUser, uploadPhoto, uploadingPhoto, setMainPhoto, loading } = rootStore.profileStore
+  const {
+    profile,
+    isCurrentUser,
+    uploadPhoto,
+    uploadingPhoto,
+    setMainPhoto,
+    loading,
+    deletePhoto,
+  } = rootStore.profileStore
   const [addPhotoMode, setAddPhotoMode] = useState(false)
   const [target, setTarget] = useState<string | undefined>(undefined)
+  const [deleteTarget, setDeleteTarget] = useState<string | undefined>(undefined)
 
   const handleUploadImage = (photo: Blob) => {
     uploadPhoto(photo).then(() => setAddPhotoMode(false))
@@ -51,7 +60,18 @@ const ProfilePhotos = () => {
                             setMainPhoto(photo)
                           }}
                         />
-                        <Button basic negative icon="trash" />
+                        <Button
+                          name={photo.id}
+                          disabled={photo.isMain}
+                          loading={loading && deleteTarget === photo.id}
+                          basic
+                          negative
+                          icon="trash"
+                          onClick={(e) => {
+                            deletePhoto(photo)
+                            setDeleteTarget(e.currentTarget.name)
+                          }}
+                        />
                       </Button.Group>
                     )}
                   </Card>
