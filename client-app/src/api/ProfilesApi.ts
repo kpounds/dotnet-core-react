@@ -7,6 +7,10 @@ class ProfilesApi {
     HttpAgent.get<IProfile>(`/userProfiles/${username}`)
 
   public uploadPhoto = async (photo: Blob): Promise<IPhoto> => HttpAgent.postForm<IPhoto>("/photos", photo)
+
+  public setMainPhoto = async (id: string): Promise<void> => HttpAgent.post(`/photos/${id}/setMain`, {})
+
+  public deletePhoto = async (id: string): Promise<void> => HttpAgent.delete(`/photos/${id}`)
 }
 
 export default new ProfilesApi()
