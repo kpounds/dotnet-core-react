@@ -29,7 +29,7 @@ const PhotoUploadWidget = () => {
         <Grid.Column width={1} />
         <Grid.Column width={4}>
           <Header sub color="teal" content="Step 3 - Preview & Upload" />
-          {files.length > 0 && <Image src={files[0].preview} />}
+          {files.length > 0 && <div className="img-preview" style={{ minHeight: "200px", overflow: "hidden" }} />}
         </Grid.Column>
       </Grid>
     </Fragment>
