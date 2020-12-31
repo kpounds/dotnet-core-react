@@ -1,10 +1,15 @@
-import React, { Fragment, useEffect, useState } from "react"
-import { Header, Grid, Image } from "semantic-ui-react"
+import React, { Fragment, FunctionComponent, useEffect, useState } from "react"
+import { Header, Grid, Image, Button } from "semantic-ui-react"
 import { observer } from "mobx-react-lite"
 import PhotoWidgetDropzone from "./PhotoWidgetDropzone"
 import PhotoWidgetCropper from "./PhotoWidgetCropper"
 
-const PhotoUploadWidget = () => {
+interface IPhotoUploadWidgetProps {
+  loading: boolean
+  uploadPhoto: (file: Blob) => void
+}
+
+const PhotoUploadWidget: FunctionComponent<IPhotoUploadWidgetProps> = ({ loading, uploadPhoto }) => {
   const [files, setFiles] = useState<any[]>([])
   const [image, setImage] = useState<Blob | null>(null)
 
@@ -29,7 +34,15 @@ const PhotoUploadWidget = () => {
         <Grid.Column width={1} />
         <Grid.Column width={4}>
           <Header sub color="teal" content="Step 3 - Preview & Upload" />
-          {files.length > 0 && <div className="img-preview" style={{ minHeight: "200px", overflow: "hidden" }} />}
+          {files.length > 0 && (
+            <>
+              <div className="img-preview" style={{ minHeight: "200px", overflow: "hidden" }} />
+              <Button.Group widths={2}>
+                <Button positive icon="check" loading={loading} onClick={() => uploadPhoto(image!)} />
+                <Button icon="close" disabled={loading} onClick={() => setFiles([])} />
+              </Button.Group>
+            </>
+          )}
         </Grid.Column>
       </Grid>
     </Fragment>
