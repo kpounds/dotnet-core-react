@@ -54,4 +54,14 @@ export default class HttpAgent {
     axios.put(url, body).then(sleep(1000)).then(responseBody)
 
   public static delete = async <T>(url: string): Promise<T> => axios.delete(url).then(sleep(1000)).then(responseBody)
+
+  public static postForm = async <T>(url: string, file: Blob): Promise<T> => {
+    let formData = new FormData()
+    formData.append("File", file)
+    return axios
+      .post(url, formData, {
+        headers: { "Content-type": "multipart/form-data" },
+      })
+      .then(responseBody)
+  }
 }
