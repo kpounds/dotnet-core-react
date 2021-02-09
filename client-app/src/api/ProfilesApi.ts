@@ -11,6 +11,8 @@ class ProfilesApi {
   public setMainPhoto = async (id: string): Promise<void> => HttpAgent.post(`/photos/${id}/setMain`, {})
 
   public deletePhoto = async (id: string): Promise<void> => HttpAgent.delete(`/photos/${id}`)
+
+  public editProfile = async (profile: Partial<IProfile>): Promise<void> => HttpAgent.put("/userProfiles", profile)
 }
 
 export default new ProfilesApi()

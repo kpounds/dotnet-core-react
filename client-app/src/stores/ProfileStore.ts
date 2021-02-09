@@ -105,4 +105,24 @@ export default class ProfileStore {
       })
     }
   }
+
+  @action
+  public editProfile = async (profile: Partial<IProfile>) => {
+    this.loading = true
+    try {
+      await ProfilesApi.editProfile(profile)
+      runInAction(() => {
+        if (profile.displayName !== this.rootStore.userStore.user!.displayName) {
+          this.rootStore.userStore.user!.displayName = profile.displayName!
+        }
+        this.profile = { ...this.profile!, ...profile }
+      })
+    } catch (error) {
+      toast.error("Problem editing profile")
+    } finally {
+      runInAction(() => {
+        this.loading = false
+      })
+    }
+  }
 }

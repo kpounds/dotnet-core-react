@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Application.Activities;
 using Application.Activities.Commands;
-using Domain.Objects;
 using Domain.Objects.Models;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
