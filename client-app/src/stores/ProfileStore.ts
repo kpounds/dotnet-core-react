@@ -107,13 +107,15 @@ export default class ProfileStore {
   }
 
   @action
-  public editProfile = async (displayName: string, bio: string) => {
+  public editProfile = async (profile: Partial<IProfile>) => {
     this.loading = true
     try {
-      await ProfilesApi.editProfile(displayName, bio)
+      await ProfilesApi.editProfile(profile)
       runInAction(() => {
-        this.profile!.displayName = displayName
-        this.profile!.bio = bio
+        if (profile.displayName !== this.rootStore.userStore.user!.displayName) {
+          this.rootStore.userStore.user!.displayName = profile.displayName!
+        }
+        this.profile = { ...this.profile!, ...profile }
       })
     } catch (error) {
       toast.error("Problem editing profile")

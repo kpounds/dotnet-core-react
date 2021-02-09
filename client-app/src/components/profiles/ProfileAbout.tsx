@@ -16,7 +16,7 @@ const ProfileAbout = () => {
   return (
     <Tab.Pane>
       <Grid>
-        <Grid.Column width={16} style={{ paddingBottom: 0 }}>
+        <Grid.Column width={16}>
           <Header floated="left" image={profile.image} content={`About ${profile.displayName}`} />
           {isCurrentUser && (
             <Button
@@ -28,7 +28,7 @@ const ProfileAbout = () => {
           )}
         </Grid.Column>
         <Grid.Column width={16}>
-          {editProfileMode ? <ProfileEditForm toggleFormOpen={setEditProfileMode} /> : <>{profile.bio}</>}
+          {editProfileMode ? <ProfileEditForm toggleFormOpen={setEditProfileMode} /> : <span>{profile.bio}</span>}
         </Grid.Column>
       </Grid>
     </Tab.Pane>

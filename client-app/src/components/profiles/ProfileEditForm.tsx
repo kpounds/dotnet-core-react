@@ -20,8 +20,7 @@ const ProfileEditForm: FunctionComponent<IProfileEditFormProps> = ({ toggleFormO
   const { profile, editProfile, loading } = rootStore.profileStore
 
   const handleFinalFormSubmit = async (values: any) => {
-    const { displayName, bio } = values
-    await editProfile(displayName, bio)
+    await editProfile(values)
     toggleFormOpen(false)
   }
 
